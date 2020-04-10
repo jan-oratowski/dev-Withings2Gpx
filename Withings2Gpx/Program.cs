@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Withings2Gpx.Parsers;
 
 namespace Withings2Gpx
@@ -11,8 +8,18 @@ namespace Withings2Gpx
     {
         static void Main(string[] args)
         {
-            var activities = new ActivityParser().Get();
-            var activity = activities.Where(a => a.Value == "Cycling").OrderByDescending(a => a.TimeStamp).First();
+            var activities = new ActivityParser().Get().OrderByDescending(a => a.TimeStamp).Take(20).ToList();
+            var i = 0;
+            foreach (var a in activities)
+            {
+                i++;
+                Console.WriteLine($"{i}. {a.TimeStamp} {a.Value}");
+            }
+            
+            if (!int.TryParse(Console.ReadLine(), out i) || i > activities.Count)
+                return;
+
+            var activity = activities[i - 1];
 
             var heartRates = new HeartRateParser().Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
             var longitudes = new CoordinateParser(CoordinateType.Longitude).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
@@ -25,6 +32,7 @@ namespace Withings2Gpx
             var gpx = new GpxCreator();
 
             gpx.AddData(activityLongs, activityLats, activityHrs);
+            gpx.ValidateHr();
             gpx.Save(@"D:\test\export.gpx");
         }
     }

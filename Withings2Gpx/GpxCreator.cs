@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Withings2Gpx.Models;
 using Withings2Gpx.Models.Withings;
 
@@ -46,6 +44,18 @@ namespace Withings2Gpx
                 }
 
                 GpxItems.Add(gpx);
+            }
+        }
+
+        public void ValidateHr()
+        {
+            for (var i = 0; i < GpxItems.Count; i++)
+            {
+                var gpxItem = GpxItems[i];
+                if (gpxItem.Hr > 60)
+                    continue;
+
+                gpxItem.Hr = (int)GpxItems.Where(g => g.Hr > 60).OrderBy(g => Math.Abs((g.Time - gpxItem.Time).TotalSeconds)).Take(10).Average(g => g.Hr);
             }
         }
 
