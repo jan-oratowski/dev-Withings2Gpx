@@ -43,11 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GpxCreator.cs" />
+    <Compile Include="Models\GpxItem.cs" />
+    <Compile Include="Models\Withings\Activity.cs" />
+    <Compile Include="Models\Withings\HeartRate.cs" />
+    <Compile Include="Models\Withings\Coordinate.cs" />
+    <Compile Include="Models\Withings\WithingsCsvEntry.cs" />
+    <Compile Include="Parsers\ActivityParser.cs" />
+    <Compile Include="Parsers\CoordinateParser.cs" />
+    <Compile Include="Parsers\CsvParser.cs" />
+    <Compile Include="Parsers\HeartRateParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
