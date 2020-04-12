@@ -22,7 +22,7 @@ namespace Withings2Gpx.Parsers
             {
                 TimeStamp = DateTime.Parse(vals[0]),
                 End = DateTime.Parse(vals[1]),
-                Value = vals[5]
+                Value = string.IsNullOrEmpty(vals[5]) ? string.Empty : vals[5].Replace("\"", "")
             };
         }
     }

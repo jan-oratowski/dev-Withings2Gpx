@@ -21,7 +21,7 @@ namespace Withings2Gpx.Models
 
             var str = $"<trkpt lat=\"{Latitude.ToString(CultureInfo.InvariantCulture)}\"" +
                 $" lon=\"{Longitude.ToString(CultureInfo.InvariantCulture)}\"><time>{time}</time>";
-            if (Hr != 0)
+            if (Hr > 0)
                 str += $"<extensions><gpxtpx:TrackPointExtension><gpxtpx:hr>{Hr}</gpxtpx:hr></gpxtpx:TrackPointExtension></extensions>";
             str += "</trkpt>";
             return str;
