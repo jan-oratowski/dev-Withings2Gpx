@@ -52,3 +52,4 @@ namespace Withings2Gpx
         }
     }
 }
+a
