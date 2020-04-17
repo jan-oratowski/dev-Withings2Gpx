@@ -9,7 +9,7 @@ namespace Withings2Gpx.Parsers
 {
     class ActivityParser : CsvParser<Activity>
     {
-        public ActivityParser() : base("activities.csv")
+        public ActivityParser(string path) : base(System.IO.Path.Combine(path, "activities.csv"))
         {
 
         }

@@ -10,8 +10,9 @@ namespace Withings2Gpx.Parsers
 {
     class CoordinateParser : CsvParser<Coordinate>
     {
-        public CoordinateParser(CoordinateType coordinate) : base(coordinate == CoordinateType.Latitude
-            ? "raw_tracker_latitude.csv" : "raw_tracker_longitude.csv")
+        public CoordinateParser(string path, CoordinateType coordinate) :
+            base(System.IO.Path.Combine(path, coordinate == CoordinateType.Latitude
+            ? "raw_tracker_latitude.csv" : "raw_tracker_longitude.csv"))
         {
 
         }

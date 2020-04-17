@@ -10,7 +10,8 @@ namespace Withings2Gpx.Parsers
 {
     class HeartRateParser : CsvParser<HeartRate>
     {
-        public HeartRateParser() : base("raw_tracker_hr.csv")
+        public HeartRateParser(string path) :
+            base(System.IO.Path.Combine(path, "raw_tracker_hr.csv"))
         {
         }
 

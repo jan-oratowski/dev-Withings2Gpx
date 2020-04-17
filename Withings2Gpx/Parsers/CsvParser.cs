@@ -9,15 +9,15 @@ namespace Withings2Gpx.Parsers
     abstract class CsvParser<T>
     {
         private readonly string _file;
-        
-        public CsvParser(string file)
+
+        protected CsvParser(string file)
         {
             _file = file;
         }
 
         public List<T> Get(string filter = null)
         {
-            var lines = System.IO.File.ReadAllLines(@"D:\test\" + _file);
+            var lines = System.IO.File.ReadAllLines(_file);
             var list = new List<T>();
             if (lines.Length == 0)
                 return list;

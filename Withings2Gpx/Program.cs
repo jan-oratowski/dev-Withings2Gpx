@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Linq;
+using System.Windows.Forms;
 using Withings2Gpx.Parsers;
 
 namespace Withings2Gpx
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
-            var activities = new ActivityParser().Get().OrderByDescending(a => a.TimeStamp).ToList();
+            var fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() != DialogResult.OK)
+                return;
+
+            var activities = new ActivityParser(fbd.SelectedPath).Get().OrderByDescending(a => a.TimeStamp).ToList();
             var i = 0;
             foreach (var a in activities.Take(20))
             {
@@ -22,7 +28,7 @@ namespace Withings2Gpx
             {
                 foreach (var item in activities.Where(a => a.Value.ToLower() == command.ToLower()))
                 {
-                    ExportActivity(item);
+                    ExportActivity(item, fbd.SelectedPath);
                 }
                 return;
             }
@@ -31,14 +37,14 @@ namespace Withings2Gpx
                 return;
 
             var activity = activities[i - 1];
-            ExportActivity(activity);
+            ExportActivity(activity, fbd.SelectedPath);
         }
 
-        private static void ExportActivity(Models.Withings.Activity activity)
+        private static void ExportActivity(Models.Withings.Activity activity, string path)
         {
-            var heartRates = new HeartRateParser().Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
-            var longitudes = new CoordinateParser(CoordinateType.Longitude).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
-            var latitudes = new CoordinateParser(CoordinateType.Latitude).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
+            var heartRates = new HeartRateParser(path).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
+            var longitudes = new CoordinateParser(path, CoordinateType.Longitude).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
+            var latitudes = new CoordinateParser(path, CoordinateType.Latitude).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
 
             var activityHrs = heartRates.Where(h => h.TimeStamp >= activity.TimeStamp && h.TimeStamp <= activity.End).ToList();
             var activityLongs = longitudes.Where(l => l.TimeStamp >= activity.TimeStamp && l.TimeStamp <= activity.End).ToList();
@@ -48,8 +54,7 @@ namespace Withings2Gpx
 
             gpx.AddData(activityLongs, activityLats, activityHrs);
             gpx.ValidateHr();
-            gpx.SaveGpx(@"D:\test\");
+            gpx.SaveGpx(path);
         }
     }
 }
-a
