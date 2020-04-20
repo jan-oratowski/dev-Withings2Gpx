@@ -10,34 +10,40 @@ namespace Withings2Gpx
         [STAThread]
         static void Main(string[] args)
         {
+            var key = "";
             var fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() != DialogResult.OK)
                 return;
 
-            var activities = new ActivityParser(fbd.SelectedPath).Get().OrderByDescending(a => a.TimeStamp).ToList();
-            var i = 0;
-            foreach (var a in activities.Take(20))
+            while (key.ToLower() != "q")
             {
-                i++;
-                Console.WriteLine($"{i}. {a.TimeStamp} {a.Value}");
-            }
-
-            var command = Console.ReadLine();
-
-            if (activities.Any(a => a.Value.ToLower() == command.ToLower()))
-            {
-                foreach (var item in activities.Where(a => a.Value.ToLower() == command.ToLower()))
+                var activities = new ActivityParser(fbd.SelectedPath).Get().OrderByDescending(a => a.TimeStamp)
+                    .ToList();
+                var i = 0;
+                foreach (var a in activities.Take(20))
                 {
-                    ExportActivity(item, fbd.SelectedPath);
+                    i++;
+                    Console.WriteLine($"{i}. {a.TimeStamp} {a.Value}");
                 }
-                return;
+
+                var command = Console.ReadLine();
+
+                if (activities.Any(a => a.Value.ToLower() == command.ToLower()))
+                {
+                    foreach (var item in activities.Where(a => a.Value.ToLower() == command.ToLower()))
+                    {
+                        ExportActivity(item, fbd.SelectedPath);
+                    }
+
+                    return;
+                }
+
+                if (!int.TryParse(command, out i) || i > activities.Count)
+                    return;
+
+                var activity = activities[i - 1];
+                ExportActivity(activity, fbd.SelectedPath);
             }
-
-            if (!int.TryParse(command, out i) || i > activities.Count)
-                return;
-
-            var activity = activities[i - 1];
-            ExportActivity(activity, fbd.SelectedPath);
         }
 
         private static void ExportActivity(Models.Withings.Activity activity, string path)
