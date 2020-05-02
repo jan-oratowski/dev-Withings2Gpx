@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -45,7 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GpxCreator.cs" />
+    <Compile Include="Models\Config.cs" />
     <Compile Include="Models\GpxItem.cs" />
+    <Compile Include="Models\WithingsHttp\RecordedHistory.cs" />
+    <Compile Include="Models\WithingsHttp\WithingsResponse.cs" />
     <Compile Include="Models\Withings\Activity.cs" />
     <Compile Include="Models\Withings\HeartRate.cs" />
     <Compile Include="Models\Withings\Coordinate.cs" />
@@ -54,11 +60,13 @@
     <Compile Include="Parsers\CoordinateParser.cs" />
     <Compile Include="Parsers\CsvParser.cs" />
     <Compile Include="Parsers\HeartRateParser.cs" />
+    <Compile Include="Parsers\JsonParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
