@@ -31,7 +31,7 @@ namespace Withings2Gpx
                 var activities = new ActivityParser(fbd.SelectedPath).Get().OrderByDescending(a => a.TimeStamp)
                     .ToList();
                 var i = 0;
-                foreach (var a in activities.Take(20))
+                foreach (var a in activities.Take(50))
                 {
                     i++;
                     Console.WriteLine($"{i}. {a.TimeStamp} {a.Value}");
