@@ -60,25 +60,35 @@ namespace Withings2Gpx
 
         private static void ExportActivity(Models.Withings.Activity activity, string path)
         {
-            var heartRates = new HeartRateParser(path).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
-            var longitudes = new CoordinateParser(path, CoordinateType.Longitude).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
-            var latitudes = new CoordinateParser(path, CoordinateType.Latitude).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
+            try
+            {
+                var heartRates = new HeartRateParser(path).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
+                var longitudes = new CoordinateParser(path, CoordinateType.Longitude).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
+                var latitudes = new CoordinateParser(path, CoordinateType.Latitude).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
 
-            var jsonParser = new JsonParser(path);
+                var jsonParser = new JsonParser(path);
 
-            heartRates.AddRange(jsonParser.HeartRates.Where(hr => !heartRates.Select(h => h.TimeStamp).Contains(hr.TimeStamp)));
-            longitudes.AddRange(jsonParser.Longitudes.Where(ln => !longitudes.Select(l => l.TimeStamp).Contains(ln.TimeStamp)));
-            latitudes.AddRange(jsonParser.Latitudes.Where(la => !latitudes.Select(l => l.TimeStamp).Contains(la.TimeStamp)));
+                heartRates.AddRange(jsonParser.HeartRates.Where(hr => !heartRates.Select(h => h.TimeStamp).Contains(hr.TimeStamp)));
+                longitudes.AddRange(jsonParser.Longitudes.Where(ln => !longitudes.Select(l => l.TimeStamp).Contains(ln.TimeStamp)));
+                latitudes.AddRange(jsonParser.Latitudes.Where(la => !latitudes.Select(l => l.TimeStamp).Contains(la.TimeStamp)));
 
-            var activityHrs = heartRates.Where(h => h.TimeStamp >= activity.TimeStamp && h.TimeStamp <= activity.End).ToList();
-            var activityLongs = longitudes.Where(l => l.TimeStamp >= activity.TimeStamp && l.TimeStamp <= activity.End).ToList();
-            var activityLats = latitudes.Where(l => l.TimeStamp >= activity.TimeStamp && l.TimeStamp <= activity.End).ToList();
+                var activityHrs = heartRates.Where(h => h.TimeStamp >= activity.TimeStamp && h.TimeStamp <= activity.End).ToList();
+                var activityLongs = longitudes.Where(l => l.TimeStamp >= activity.TimeStamp && l.TimeStamp <= activity.End).ToList();
+                var activityLats = latitudes.Where(l => l.TimeStamp >= activity.TimeStamp && l.TimeStamp <= activity.End).ToList();
 
-            var gpx = new GpxCreator(activity);
+                var gpx = new GpxCreator(activity);
 
-            gpx.AddData(activityLongs, activityLats, activityHrs);
-            gpx.ValidateHr();
-            gpx.SaveGpx(path);
+                gpx.AddData(activityLongs, activityLats, activityHrs);
+                gpx.ValidateHr();
+                gpx.SaveGpx(path);
+            }
+            catch (Exception e)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine(e);
+                Console.WriteLine("     export failed!");
+                Console.BackgroundColor = ConsoleColor.Black;
+            }
         }
 
         private static string GetArgument(string[] args, string argument, string defaultValue = null)

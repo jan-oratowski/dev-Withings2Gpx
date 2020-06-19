@@ -77,6 +77,11 @@ namespace Withings2Gpx
 
             data += "<extensions><gte:name>#1</gte:name><gte:color>#fbaf00</gte:color></extensions></trkseg></trk></gpx>";
 
+            path = System.IO.Path.Combine(path, "gpx");
+
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+
             System.IO.File.WriteAllText(System.IO.Path.Combine(path,
                 _activity.TimeStamp.ToString("yyyy-MM-dd HHmmss") + " " + _activity.Value + ".gpx"),
                 data);
