@@ -51,7 +51,11 @@ namespace Withings2Gpx.Parsers
             var items = _recordedHistory.History.Where(h => h.DataType == RecordedHistory.DataType.Location);
             foreach (var item in items)
             {
-                var data = item.Response.Body.Data().Body.Series[0];
+                var bodyData = item.Response.Body.Data();
+                if (bodyData == null || bodyData.Body.Series.Count == 0)
+                    continue;
+
+                var data = bodyData.Body.Series[0];
                 for (var i = 0; i < data.Dates.Length; i++)
                 {
                     var coordinate = new Coordinate
@@ -75,7 +79,11 @@ namespace Withings2Gpx.Parsers
             var items = _recordedHistory.History.Where(h => h.DataType == RecordedHistory.DataType.HR);
             foreach (var item in items)
             {
-                var data = item.Response.Body.Data().Body.Series[0];
+                var bodyData = item.Response.Body.Data();
+                if (bodyData == null || bodyData.Body.Series.Count == 0)
+                    continue;
+
+                var data = bodyData.Body.Series[0];
                 for (var i = 0; i < data.Dates.Length; i++)
                 {
                     var hr = new HeartRate
@@ -90,6 +98,6 @@ namespace Withings2Gpx.Parsers
             return hrs;
         }
 
-        private static DateTime FromUnixTime(long unixTime) => new DateTime(1970,01,01,0,0,0).AddSeconds(unixTime).ToLocalTime();
+        private static DateTime FromUnixTime(long unixTime) => new DateTime(1970, 01, 01, 0, 0, 0).AddSeconds(unixTime).ToLocalTime();
     }
 }
