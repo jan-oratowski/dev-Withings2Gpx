@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using Withings2Gpx.Models;
 using Withings2Gpx.Parsers;
@@ -88,6 +89,7 @@ namespace Withings2Gpx
                 Console.WriteLine(e);
                 Console.WriteLine("     export failed!");
                 Console.BackgroundColor = ConsoleColor.Black;
+                Thread.Sleep(2500);
             }
         }
 

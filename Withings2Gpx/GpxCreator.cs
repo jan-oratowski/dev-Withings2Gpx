@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Withings2Gpx.Models;
 using Withings2Gpx.Models.Withings;
 
@@ -66,6 +67,15 @@ namespace Withings2Gpx
 
         public void SaveGpx(string path)
         {
+            if (GpxItems?.Count == 0)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("Not saving: " + _activity.TimeStamp.ToString("yyyy-MM-dd HHmmss") + " " + _activity.Value + ".gpx - nothing to export!");
+                Console.BackgroundColor = ConsoleColor.Black;
+                Thread.Sleep(1000);
+                return;
+            }
+
             var data = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                 "<gpx version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:gte=\"http://www.gpstrackeditor.com/xmlschemas/General/1\" xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v1\" xmlns:gpxx=\"http://www.garmin.com/xmlschemas/GpxExtensions/v3\" targetNamespace=\"http://www.topografix.com/GPX/1/1\" elementFormDefault=\"qualified\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">" +
                 "<metadata><name>Withings Export</name></metadata><trk><name>Withings Export</name><trkseg>";
@@ -85,6 +95,11 @@ namespace Withings2Gpx
             System.IO.File.WriteAllText(System.IO.Path.Combine(path,
                 _activity.TimeStamp.ToString("yyyy-MM-dd HHmmss") + " " + _activity.Value + ".gpx"),
                 data);
+
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("File: " + _activity.TimeStamp.ToString("yyyy-MM-dd HHmmss") + " " + _activity.Value + ".gpx saved!");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Thread.Sleep(1000);
         }
     }
 }

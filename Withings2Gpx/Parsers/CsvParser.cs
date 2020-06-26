@@ -31,7 +31,7 @@ namespace Withings2Gpx.Parsers
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        //Console.WriteLine(ex);
                     }  
             }
             return list;
