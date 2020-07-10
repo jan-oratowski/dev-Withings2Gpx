@@ -14,7 +14,10 @@ namespace Withings2Gpx.Parsers
             base(System.IO.Path.Combine(path, coordinate == CoordinateType.Latitude
             ? "raw_tracker_latitude.csv" : "raw_tracker_longitude.csv"))
         {
-
+            ParseType = "Coordinate CsvParser " +
+                        (coordinate == CoordinateType.Latitude
+                            ? "latitude"
+                            : "longitude");
         }
 
         protected override Coordinate Parser(string line)

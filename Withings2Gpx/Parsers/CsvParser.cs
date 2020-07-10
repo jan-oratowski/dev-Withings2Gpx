@@ -9,6 +9,7 @@ namespace Withings2Gpx.Parsers
     abstract class CsvParser<T>
     {
         private readonly string _file;
+        protected string ParseType = "Generic CsvParser";
 
         protected CsvParser(string file)
         {
@@ -17,6 +18,7 @@ namespace Withings2Gpx.Parsers
 
         public List<T> Get(string filter = null)
         {
+            Console.WriteLine($"Started {ParseType}");
             var lines = System.IO.File.ReadAllLines(_file);
             var list = new List<T>();
             if (lines.Length == 0)
@@ -27,13 +29,16 @@ namespace Withings2Gpx.Parsers
                 if (ValidateLine(lines[i], filter))
                     try
                     {
-                        list.Add(Parser(lines[i]));
+                        var line = Parser(lines[i]);
+                        if (line != null)
+                            list.Add(line);
                     }
                     catch (Exception ex)
                     {
                         //Console.WriteLine(ex);
                     }  
             }
+            Console.WriteLine($"Finished {ParseType}");
             return list;
         }
 

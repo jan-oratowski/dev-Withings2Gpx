@@ -11,7 +11,7 @@ namespace Withings2Gpx.Parsers
     {
         public ActivityParser(string path) : base(System.IO.Path.Combine(path, "activities.csv"))
         {
-
+            ParseType = "Activity CsvParser";
         }
 
         protected override Activity Parser(string line)

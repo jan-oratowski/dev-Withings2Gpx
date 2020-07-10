@@ -49,8 +49,13 @@
   <ItemGroup>
     <Compile Include="GpxCreator.cs" />
     <Compile Include="Models\Config.cs" />
+    <Compile Include="Models\Data\Activity.cs" />
+    <Compile Include="Models\Data\Coordinate.cs" />
+    <Compile Include="Models\Data\Data.cs" />
+    <Compile Include="Models\Data\HeartRate.cs" />
+    <Compile Include="Models\Data\Source.cs" />
     <Compile Include="Models\GpxItem.cs" />
-    <Compile Include="Models\LocalData.cs" />
+    <Compile Include="Models\Data\LocalData.cs" />
     <Compile Include="Models\WithingsHttp\RecordedHistory.cs" />
     <Compile Include="Models\WithingsHttp\WithingsResponse.cs" />
     <Compile Include="Models\Withings\Activity.cs" />

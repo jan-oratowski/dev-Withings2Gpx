@@ -17,17 +17,21 @@ namespace Withings2Gpx.Parsers
         public List<Coordinate> Longitudes, Latitudes;
         public List<HeartRate> HeartRates;
 
+        public static Task<JsonParser> Run(string path) => Task.Factory.StartNew(() => new JsonParser(path));
 
         public JsonParser(string path)
         {
             _path = path;
+            
             ParseHistory();
-            HeartRates = GetHeartRates();
-            Debug.Print(HeartRates.OrderByDescending(i => i.TimeStamp).First().TimeStamp.ToString());
-            Longitudes = GetCoordinates(CoordinateType.Longitude);
-            Debug.Print(Longitudes.OrderByDescending(i => i.TimeStamp).First().TimeStamp.ToString());
-            Latitudes = GetCoordinates(CoordinateType.Latitude);
-            Debug.Print(Latitudes.OrderByDescending(i => i.TimeStamp).First().TimeStamp.ToString());
+            var heartRateParser = Task.Factory.StartNew(GetHeartRates);
+            var longitudesParser = Task.Factory.StartNew(() => GetCoordinates(CoordinateType.Longitude));
+            var latitudeParser = Task.Factory.StartNew(() => GetCoordinates(CoordinateType.Latitude));
+            Task.WaitAll(heartRateParser, longitudesParser, latitudeParser);
+
+            HeartRates = heartRateParser.Result;
+            Longitudes = longitudesParser.Result;
+            Latitudes = latitudeParser.Result;
         }
 
         private void ParseHistory()
@@ -43,6 +47,8 @@ namespace Withings2Gpx.Parsers
 
         private List<Coordinate> GetCoordinates(CoordinateType coordinateType)
         {
+            Console.WriteLine("Started Coordinate JsonParser " + (coordinateType == CoordinateType.Longitude ? "longitude" : "latitude"));
+
             var coordinates = new List<Coordinate>();
             if (!_parsed)
                 return coordinates;
@@ -66,12 +72,16 @@ namespace Withings2Gpx.Parsers
                     coordinates.Add(coordinate);
                 }
             }
+            
+            Console.WriteLine("Finished Coordinate JsonParser " + (coordinateType == CoordinateType.Longitude ? "longitude" : "latitude"));
 
             return coordinates;
         }
 
         private List<HeartRate> GetHeartRates()
         {
+            Console.WriteLine("Started HeartRate JsonParser");
+
             var hrs = new List<HeartRate>();
             if (!_parsed)
                 return hrs;
@@ -95,6 +105,8 @@ namespace Withings2Gpx.Parsers
                 }
             }
 
+            Console.WriteLine("Finished HeartRate JsonParser");
+            
             return hrs;
         }
 
