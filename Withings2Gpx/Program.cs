@@ -16,7 +16,6 @@ namespace Withings2Gpx
         public static Config Config;
         public static string ConfigPath;
         public static LocalData Data;
-        public const string LocalDataFile = "data.json";
 
         [STAThread]
         static void Main(string[] args)
@@ -67,9 +66,8 @@ namespace Withings2Gpx
         private static void LoadData(string path)
         {
             Console.WriteLine($"Started loading data... {DateTime.Now}");
-            var file = Path.Combine(path, LocalDataFile);
 
-            var dataTask = Task.Factory.StartNew(() => LocalData.Load(file));
+            var dataTask = Task.Factory.StartNew(() => LocalData.Load(path));
             var activitiesCsvParse = Task.Factory.StartNew(() => new ActivityParser(path).Get().OrderByDescending(a => a.TimeStamp));
             var heartRateCsvParse = Task.Factory.StartNew(() => new HeartRateParser(path).Get());
             var longitudeCsvParse = Task.Factory.StartNew(() => new CoordinateParser(path, CoordinateType.Longitude).Get());
@@ -100,7 +98,7 @@ namespace Withings2Gpx
             AddEntries(jsonTask.Result.HeartRates, jsonTask.Result.Longitudes, jsonTask.Result.Latitudes, Source.Json);
 
             Console.WriteLine($"Started saving data... {DateTime.Now}");
-            Data.Save(file);
+            Data.Save(path);
         }
 
         public static void AddEntries(List<Models.Withings.HeartRate> hrs, List<Models.Withings.Coordinate> lons, List<Models.Withings.Coordinate> lats, Source src)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Withings2Gpx.Models.Data
@@ -12,6 +13,11 @@ namespace Withings2Gpx.Models.Data
         public Dictionary<DateTime, Coordinate> Latitudes;
         public List<Activity> Activities;
 
+        private const string HrFile = "data_hr.json";
+        private const string LonFile = "data_lon.json";
+        private const string LatFile = "data_lat.json";
+        private const string ActFile = "data_act.json";
+
         public LocalData()
         {
             HeartRates = new Dictionary<DateTime, HeartRate>();
@@ -20,22 +26,50 @@ namespace Withings2Gpx.Models.Data
             Activities = new List<Activity>();
         }
 
-        public static LocalData Load(string file)
+        public static LocalData Load(string path)
         {
-            Console.WriteLine("Started loading data from local file...");
-            if (!File.Exists(file))
-                new LocalData().Save(file);
+            var data = new LocalData();
             
-            var json = File.ReadAllText(file);
-            var data = JsonConvert.DeserializeObject<LocalData>(json);
+            var hrLoad = Task.Factory.StartNew(() => Load<Dictionary<DateTime,HeartRate>>(Path.Combine(path, HrFile)));
+            var lonLoad = Task.Factory.StartNew(() => Load<Dictionary<DateTime,Coordinate>>(Path.Combine(path, LonFile)));
+            var latLoad = Task.Factory.StartNew(() => Load<Dictionary<DateTime,Coordinate>>(Path.Combine(path, LatFile)));
+            var actLoad = Task.Factory.StartNew(() => Load<List<Activity>>(Path.Combine(path, ActFile)));
 
-            Console.WriteLine("Finished loading data from local file...");
+            Task.WaitAll(hrLoad, lonLoad, latLoad, actLoad);
+
+            data.HeartRates = hrLoad.Result;
+            data.Longitudes = lonLoad.Result;
+            data.Latitudes = latLoad.Result;
+            data.Activities = actLoad.Result;
+
             return data;
         }
 
-        public void Save(string file)
+        private static T Load<T>(string file) where T : new()
         {
-            var json = JsonConvert.SerializeObject(this, Formatting.Indented);
+            Console.WriteLine("Started loading data from local file: " + Path.GetFileName(file));
+            if (!File.Exists(file))
+                new LocalData().Save(file, new T());
+
+            var json = File.ReadAllText(file);
+            var data = JsonConvert.DeserializeObject<T>(json);
+
+            Console.WriteLine("Finished loading data from local file: " + Path.GetFileName(file));
+            return data;
+        }
+
+        public void Save(string path)
+        {
+            var hrSave = Task.Factory.StartNew(() => Save(Path.Combine(path, HrFile), HeartRates));
+            var lonSave = Task.Factory.StartNew(() => Save(Path.Combine(path, LonFile), Longitudes));
+            var latSave = Task.Factory.StartNew(() => Save(Path.Combine(path, LatFile), Latitudes));
+            var actSave = Task.Factory.StartNew(() => Save(Path.Combine(path, ActFile), Activities));
+            Task.WaitAll(hrSave, lonSave, latSave, actSave);
+        }
+
+        private void Save<T>(string file, T values)
+        {
+            var json = JsonConvert.SerializeObject(values, Formatting.Indented);
             File.WriteAllText(file, json);
         }
     }
