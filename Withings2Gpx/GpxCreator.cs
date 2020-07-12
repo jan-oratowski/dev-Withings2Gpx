@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Withings2Gpx.Models;
-using Withings2Gpx.Models.Withings;
+using Withings2Gpx.Models.Data;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace Withings2Gpx
 {
@@ -16,28 +17,31 @@ namespace Withings2Gpx
         {
             _activity = activity;
         }
-        public void AddData(List<Coordinate> longitudes, List<Coordinate> latitudes, List<HeartRate> heartRates)
+        public void AddData(List<KeyValuePair<DateTime,Coordinate>> longitudes, List<KeyValuePair<DateTime, Coordinate>> latitudes, List<KeyValuePair<DateTime, HeartRate>> heartRates)
         {
             int prevHr = -1;
 
             foreach (var longitude in longitudes)
             {
-                var latitude = latitudes.FirstOrDefault(l => l.TimeStamp == longitude.TimeStamp);
-                if (latitude == null)
+                var selectLatitude = latitudes.Where(l => l.Key == longitude.Key);
+                if (!selectLatitude.Any())
                     continue;
+
+                var latitude = selectLatitude.First();
 
                 var gpx = new GpxItem
                 {
-                    Latitude = latitude.Value,
-                    Longitude = longitude.Value,
-                    Time = longitude.TimeStamp
+                    Latitude = latitude.Value.Value,
+                    Longitude = longitude.Value.Value,
+                    Time = longitude.Key
                 };
 
-                var hr = heartRates.FirstOrDefault(h => h.TimeStamp == longitude.TimeStamp);
-                if (hr != null)
+                var selectHr = heartRates.Where(h => h.Key == longitude.Key);
+                if (selectHr.Any())
                 {
-                    gpx.Hr = hr.Value;
-                    prevHr = hr.Value;
+                    var hr = selectHr.First();
+                    gpx.Hr = hr.Value.Value;
+                    prevHr = hr.Value.Value;
                 }
                 else if (prevHr != -1)
                 {
@@ -45,7 +49,7 @@ namespace Withings2Gpx
                 }
                 else if (heartRates.Any())
                 {
-                    prevHr = heartRates.OrderBy(h => h.TimeStamp).First().Value;
+                    prevHr = heartRates.OrderBy(h => h.Key).First().Value.Value;
                     gpx.Hr = prevHr;
                 }
 
@@ -70,7 +74,7 @@ namespace Withings2Gpx
             if (GpxItems?.Count == 0)
             {
                 Console.BackgroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("Not saving: " + _activity.TimeStamp.ToString("yyyy-MM-dd HHmmss") + " " + _activity.Value + ".gpx - nothing to export!");
+                Console.WriteLine("Not saving: " + _activity.Start.ToString("yyyy-MM-dd HHmmss") + " " + _activity.Value + ".gpx - nothing to export!");
                 Console.BackgroundColor = ConsoleColor.Black;
                 Thread.Sleep(1000);
                 return;
@@ -93,11 +97,11 @@ namespace Withings2Gpx
                 System.IO.Directory.CreateDirectory(path);
 
             System.IO.File.WriteAllText(System.IO.Path.Combine(path,
-                _activity.TimeStamp.ToString("yyyy-MM-dd HHmmss") + " " + _activity.Value + ".gpx"),
+                _activity.Start.ToString("yyyy-MM-dd HHmmss") + " " + _activity.Value + ".gpx"),
                 data);
 
             Console.BackgroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("File: " + _activity.TimeStamp.ToString("yyyy-MM-dd HHmmss") + " " + _activity.Value + ".gpx saved!");
+            Console.WriteLine("File: " + _activity.Start.ToString("yyyy-MM-dd HHmmss") + " " + _activity.Value + ".gpx saved!");
             Console.BackgroundColor = ConsoleColor.Black;
             Thread.Sleep(1000);
         }

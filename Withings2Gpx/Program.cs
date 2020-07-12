@@ -37,7 +37,7 @@ namespace Withings2Gpx
             while (key.ToLower() != "q")
             {
                 var i = 0;
-                foreach (var item in Data.Activities.Take(50))
+                foreach (var item in Data.Activities.OrderByDescending(a => a.Start).Take(50))
                 {
                     i++;
                     Console.WriteLine($"{i}. {item.Start} {item.Value}");
@@ -68,7 +68,7 @@ namespace Withings2Gpx
             Console.WriteLine($"Started loading data... {DateTime.Now}");
 
             var dataTask = Task.Factory.StartNew(() => LocalData.Load(path));
-            var activitiesCsvParse = Task.Factory.StartNew(() => new ActivityParser(path).Get().OrderByDescending(a => a.TimeStamp));
+            var activitiesCsvParse = Task.Factory.StartNew(() => new ActivityParser(path).Get());
             var heartRateCsvParse = Task.Factory.StartNew(() => new HeartRateParser(path).Get());
             var longitudeCsvParse = Task.Factory.StartNew(() => new CoordinateParser(path, CoordinateType.Longitude).Get());
             var latitudeCsvParse = Task.Factory.StartNew(() => new CoordinateParser(path, CoordinateType.Latitude).Get());
@@ -78,27 +78,35 @@ namespace Withings2Gpx
 
             Data = dataTask.Result;
 
-            foreach (var csvActivity in activitiesCsvParse.Result)
-            {
-                if (!Data.Activities.Any(a =>
-                    a.Value == csvActivity.Value &&
-                    a.Start == csvActivity.TimeStamp &&
-                    a.End == csvActivity.TimeStamp))
-
-                    Data.Activities.Add(new Activity
-                    {
-                        Start = csvActivity.TimeStamp,
-                        End = csvActivity.End,
-                        Value = csvActivity.Value,
-                        Source = Source.Csv
-                    });
-            }
+            var addActivities = Task.Factory.StartNew(() => AddActivities(activitiesCsvParse.Result));
 
             AddEntries(heartRateCsvParse.Result, longitudeCsvParse.Result, latitudeCsvParse.Result, Source.Csv);
             AddEntries(jsonTask.Result.HeartRates, jsonTask.Result.Longitudes, jsonTask.Result.Latitudes, Source.Json);
 
+            addActivities.Wait();
+
             Console.WriteLine($"Started saving data... {DateTime.Now}");
             Data.Save(path);
+        }
+
+        public static void AddActivities(IEnumerable<Models.Withings.Activity> activities)
+        {
+            foreach (var csvActivity in activities)
+            {
+                if (Data.Activities.Any(a =>
+                    a.Value == csvActivity.Value &&
+                    a.Start == csvActivity.TimeStamp &&
+                    a.End == csvActivity.End))
+                    continue;
+
+                Data.Activities.Add(new Activity
+                {
+                    Start = csvActivity.TimeStamp,
+                    End = csvActivity.End,
+                    Value = csvActivity.Value,
+                    Source = Source.Csv
+                });
+            }
         }
 
         public static void AddEntries(List<Models.Withings.HeartRate> hrs, List<Models.Withings.Coordinate> lons, List<Models.Withings.Coordinate> lats, Source src)
@@ -131,25 +139,15 @@ namespace Withings2Gpx
         {
             try
             {
-                //var heartRates = new HeartRateParser(path).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
-                //var longitudes = new CoordinateParser(path, CoordinateType.Longitude).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
-                //var latitudes = new CoordinateParser(path, CoordinateType.Latitude).Get(activity.TimeStamp.ToString("yyyy-MM-dd"));
+                var activityHrs = Data.HeartRates.Where(h => h.Key >= activity.Start && h.Key <= activity.End).ToList();
+                var activityLongs = Data.Longitudes.Where(l => l.Key >= activity.Start && l.Key <= activity.End).ToList();
+                var activityLats = Data.Latitudes.Where(l => l.Key >= activity.Start && l.Key <= activity.End).ToList();
 
-                //var jsonParser = new JsonParser(path);
+                var gpx = new GpxCreator(activity);
 
-                //heartRates.AddRange(jsonParser.HeartRates.Where(hr => !heartRates.Select(h => h.TimeStamp).Contains(hr.TimeStamp)));
-                //longitudes.AddRange(jsonParser.Longitudes.Where(ln => !longitudes.Select(l => l.TimeStamp).Contains(ln.TimeStamp)));
-                //latitudes.AddRange(jsonParser.Latitudes.Where(la => !latitudes.Select(l => l.TimeStamp).Contains(la.TimeStamp)));
-
-                //var activityHrs = Data.HeartRates.Where(h => h.TimeStamp >= activity.TimeStamp && h.TimeStamp <= activity.End).ToList();
-                //var activityLongs = Data.Longitudes.Where(l => l.TimeStamp >= activity.TimeStamp && l.TimeStamp <= activity.End).ToList();
-                //var activityLats = Data.Latitudes.Where(l => l.TimeStamp >= activity.TimeStamp && l.TimeStamp <= activity.End).ToList();
-
-                //var gpx = new GpxCreator(activity);
-
-                //gpx.AddData(activityLongs, activityLats, activityHrs);
-                //gpx.ValidateHr();
-                //gpx.SaveGpx(path);
+                gpx.AddData(activityLongs, activityLats, activityHrs);
+                gpx.ValidateHr();
+                gpx.SaveGpx(path);
             }
             catch (Exception e)
             {
