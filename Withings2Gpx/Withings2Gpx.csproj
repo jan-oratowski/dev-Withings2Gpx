@@ -74,6 +74,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\dev-wpsetup\WpSetup\ConfigTools\ConfigTools.csproj">
+      <Project>{5eac8cfe-b29f-4b92-9e1c-7139b1d3d708}</Project>
+      <Name>ConfigTools</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
