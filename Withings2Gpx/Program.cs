@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ConfigTools;
 using Withings2Gpx.Models;
 using Withings2Gpx.Models.Data;
 using Withings2Gpx.Parsers;
@@ -14,25 +15,27 @@ namespace Withings2Gpx
     class Program
     {
         public static Config Config;
-        public static string ConfigPath;
         public static LocalData Data;
+        private static readonly Loader<Config> Loader = new Loader<Config>();
 
         [STAThread]
         static void Main(string[] args)
         {
-            ConfigPath = GetArgument(args, "--config", "config.json");
-            Config = Config.Load(ConfigPath);
+            var loader = new Loader<Config>();
+            Config = Loader.Load() ?? new Config();
 
             var key = "";
-            var fbd = new FolderBrowserDialog {SelectedPath = Config.LastPath};
+            var fbd = new FolderBrowserDialog { SelectedPath = Config.LastPath ?? string.Empty };
 
             if (fbd.ShowDialog() != DialogResult.OK)
                 return;
 
             Config.LastPath = fbd.SelectedPath;
-            Config.Save(Config, ConfigPath);
+            Loader.Save(Config);
 
             LoadData(fbd.SelectedPath);
+
+            Data.Activities = Data.Activities.OrderByDescending(a => a.Start).ToList();
 
             while (key.ToLower() != "q")
             {
@@ -73,7 +76,7 @@ namespace Withings2Gpx
             var longitudeCsvParse = Task.Factory.StartNew(() => new CoordinateParser(path, CoordinateType.Longitude).Get());
             var latitudeCsvParse = Task.Factory.StartNew(() => new CoordinateParser(path, CoordinateType.Latitude).Get());
             var jsonTask = JsonParser.Run(path);
-            
+
             Task.WaitAll(dataTask, activitiesCsvParse, heartRateCsvParse, longitudeCsvParse, latitudeCsvParse, jsonTask);
 
             Data = dataTask.Result;
