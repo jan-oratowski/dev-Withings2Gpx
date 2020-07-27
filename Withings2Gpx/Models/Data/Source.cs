@@ -10,6 +10,7 @@ namespace Withings2Gpx.Models.Data
     {
       Other = 0, 
       Csv = 1,
-      Json = 2
+      Json = 2,
+      Strava = 3
     } 
 }

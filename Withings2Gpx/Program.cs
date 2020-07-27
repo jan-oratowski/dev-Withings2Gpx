@@ -21,7 +21,6 @@ namespace Withings2Gpx
         [STAThread]
         static void Main(string[] args)
         {
-            var loader = new Loader<Config>();
             Config = Loader.Load() ?? new Config();
 
             var key = "";
@@ -43,10 +42,18 @@ namespace Withings2Gpx
                 foreach (var item in Data.Activities.OrderByDescending(a => a.Start).Take(50))
                 {
                     i++;
-                    Console.WriteLine($"{i}. {item.Start} {item.Value}");
+                    Console.WriteLine($"{i}. {item.Start} - {item.End} {item.Value} [{item.Source:G}]");
                 }
 
                 var command = Console.ReadLine();
+
+                if (command == "d")
+                {
+                    DetectActivity();
+                    Data.Activities = Data.Activities.OrderByDescending(a => a.Start).ToList();
+                    Data.Save(Config.LastPath);
+                    continue;
+                }
 
                 if (Data.Activities.Any(a => a.Value.ToLower() == command.ToLower()))
                 {
@@ -63,6 +70,55 @@ namespace Withings2Gpx
 
                 var activity = Data.Activities[i - 1];
                 ExportActivity(activity, fbd.SelectedPath);
+            }
+        }
+
+        private static void DetectActivity()
+        {
+            var lats = Data.Latitudes.OrderByDescending(a => a.Key).ToList();
+            var actEnd = DateTime.Now;
+            var prevLat = actEnd;
+            for (int i = 0; i < lats.Count; i++)
+            {
+                var curLat = lats[i].Key;
+
+                if (i == 0)
+                {
+                    actEnd = curLat;
+                    prevLat = curLat;
+                    continue;
+                }
+
+                if (curLat.AddMinutes(5) > prevLat)
+                {
+                    prevLat = curLat;
+                    continue;
+                }
+                
+                var activity = new Activity
+                {
+                    End = actEnd,
+                    Start = curLat,
+                    Source = Source.Other,
+                    Value = "Detected"
+                };
+                
+                if (EditableString
+                    .Input($"Activity {activity.Start} - {actEnd} detected, add to Activities? [yes]/no", "yes")
+                    .Value == "yes")
+                {
+                    Data.Activities.Add(activity);
+                    if (lats.Count > i)
+                    {
+                        actEnd = lats[i + 1].Key;
+                        prevLat = actEnd;
+                    }
+                }
+                    
+                if (EditableString
+                    .Input("Detect next? yes/[no]","no")
+                    .Value == "no")
+                    return;
             }
         }
 

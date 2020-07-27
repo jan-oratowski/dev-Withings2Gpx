@@ -64,8 +64,10 @@ namespace Withings2Gpx.Models.WithingsHttp
         public enum DataType
         {
             Unknown,
+            // ReSharper disable once InconsistentNaming
             HR,
-            Location
+            Location,
+            Activity
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -60,10 +61,26 @@ namespace Withings2Gpx.Models.Data
 
         public void Save(string path)
         {
-            var hrSave = Task.Factory.StartNew(() => Save(Path.Combine(path, HrFile), HeartRates));
-            var lonSave = Task.Factory.StartNew(() => Save(Path.Combine(path, LonFile), Longitudes));
-            var latSave = Task.Factory.StartNew(() => Save(Path.Combine(path, LatFile), Latitudes));
-            var actSave = Task.Factory.StartNew(() => Save(Path.Combine(path, ActFile), Activities));
+            var hrSave = Task.Factory.StartNew(() =>
+                Save(Path.Combine(path, HrFile), HeartRates
+                    .OrderBy(x => x.Key)
+                    .ToDictionary(x => x.Key, x => x.Value)));
+
+            var lonSave = Task.Factory.StartNew(() => 
+                Save(Path.Combine(path, LonFile), Longitudes
+                    .OrderBy(x => x.Key)
+                    .ToDictionary(x => x.Key, x => x.Value)));
+
+            var latSave = Task.Factory.StartNew(() => 
+                Save(Path.Combine(path, LatFile), Latitudes
+                    .OrderBy(x => x.Key)
+                    .ToDictionary(x => x.Key, x => x.Value)));
+
+            var actSave = Task.Factory.StartNew(() => 
+                Save(Path.Combine(path, ActFile), Activities
+                    .OrderBy(x => x.Start)
+                    .ToList()));
+
             Task.WaitAll(hrSave, lonSave, latSave, actSave);
         }
 

@@ -110,6 +110,18 @@ namespace Withings2Gpx.Parsers
             return hrs;
         }
 
+        private List<Activity> GetActivities()
+        {
+            Console.WriteLine("Started Activity JsonParser");
+            var activities = new List<Activity>();
+            if (!_parsed)
+                return activities;
+
+            var items = _recordedHistory.History.Where(h => h.DataType == RecordedHistory.DataType.Activity);
+            throw new NotImplementedException();
+
+        }
+
         private static DateTime FromUnixTime(long unixTime) => new DateTime(1970, 01, 01, 0, 0, 0).AddSeconds(unixTime).ToLocalTime();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Withings2Gpx.Models.Data
 {
-    class Activity :Data<string>
+    class Activity : Data<string>
     {
         public DateTime Start;
         public DateTime End;
