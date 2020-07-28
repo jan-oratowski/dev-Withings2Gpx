@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using ConfigTools;
 using Withings2Gpx.Models;
 using Withings2Gpx.Models.Data;
+using Withings2Gpx.Models.Db;
 using Withings2Gpx.Parsers;
 
 namespace Withings2Gpx
@@ -94,7 +95,7 @@ namespace Withings2Gpx
                     prevLat = curLat;
                     continue;
                 }
-                
+
                 var activity = new Activity
                 {
                     End = actEnd,
@@ -102,7 +103,7 @@ namespace Withings2Gpx
                     Source = Source.Other,
                     Value = "Detected"
                 };
-                
+
                 if (EditableString
                     .Input($"Activity {activity.Start} - {actEnd} detected, add to Activities? [yes]/no", "yes")
                     .Value == "yes")
@@ -114,9 +115,9 @@ namespace Withings2Gpx
                         prevLat = actEnd;
                     }
                 }
-                    
+
                 if (EditableString
-                    .Input("Detect next? yes/[no]","no")
+                    .Input("Detect next? yes/[no]", "no")
                     .Value == "no")
                     return;
             }

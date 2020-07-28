@@ -14,10 +14,10 @@ namespace Withings2Gpx.Models.Data
         public Dictionary<DateTime, Coordinate> Latitudes;
         public List<Activity> Activities;
 
-        private const string HrFile = "data_hr.json";
-        private const string LonFile = "data_lon.json";
-        private const string LatFile = "data_lat.json";
-        private const string ActFile = "data_act.json";
+        public const string HrFile = "data_hr.json";
+        public const string LonFile = "data_lon.json";
+        public const string LatFile = "data_lat.json";
+        public const string ActFile = "data_act.json";
 
         public LocalData()
         {
@@ -30,10 +30,10 @@ namespace Withings2Gpx.Models.Data
         public static LocalData Load(string path)
         {
             var data = new LocalData();
-            
-            var hrLoad = Task.Factory.StartNew(() => Load<Dictionary<DateTime,HeartRate>>(Path.Combine(path, HrFile)));
-            var lonLoad = Task.Factory.StartNew(() => Load<Dictionary<DateTime,Coordinate>>(Path.Combine(path, LonFile)));
-            var latLoad = Task.Factory.StartNew(() => Load<Dictionary<DateTime,Coordinate>>(Path.Combine(path, LatFile)));
+
+            var hrLoad = Task.Factory.StartNew(() => Load<Dictionary<DateTime, HeartRate>>(Path.Combine(path, HrFile)));
+            var lonLoad = Task.Factory.StartNew(() => Load<Dictionary<DateTime, Coordinate>>(Path.Combine(path, LonFile)));
+            var latLoad = Task.Factory.StartNew(() => Load<Dictionary<DateTime, Coordinate>>(Path.Combine(path, LatFile)));
             var actLoad = Task.Factory.StartNew(() => Load<List<Activity>>(Path.Combine(path, ActFile)));
 
             Task.WaitAll(hrLoad, lonLoad, latLoad, actLoad);
@@ -66,17 +66,17 @@ namespace Withings2Gpx.Models.Data
                     .OrderBy(x => x.Key)
                     .ToDictionary(x => x.Key, x => x.Value)));
 
-            var lonSave = Task.Factory.StartNew(() => 
+            var lonSave = Task.Factory.StartNew(() =>
                 Save(Path.Combine(path, LonFile), Longitudes
                     .OrderBy(x => x.Key)
                     .ToDictionary(x => x.Key, x => x.Value)));
 
-            var latSave = Task.Factory.StartNew(() => 
+            var latSave = Task.Factory.StartNew(() =>
                 Save(Path.Combine(path, LatFile), Latitudes
                     .OrderBy(x => x.Key)
                     .ToDictionary(x => x.Key, x => x.Value)));
 
-            var actSave = Task.Factory.StartNew(() => 
+            var actSave = Task.Factory.StartNew(() =>
                 Save(Path.Combine(path, ActFile), Activities
                     .OrderBy(x => x.Start)
                     .ToList()));

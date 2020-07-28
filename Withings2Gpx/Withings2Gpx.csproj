@@ -51,12 +51,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GpxCreator.cs" />
+    <Compile Include="Helpers\LocalDataToJsonDb.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Data\Activity.cs" />
     <Compile Include="Models\Data\Coordinate.cs" />
     <Compile Include="Models\Data\Data.cs" />
     <Compile Include="Models\Data\HeartRate.cs" />
-    <Compile Include="Models\Data\Source.cs" />
+    <Compile Include="Models\Db\Activity.cs" />
+    <Compile Include="Models\Db\Data.cs" />
+    <Compile Include="Models\Db\Source.cs" />
+    <Compile Include="Models\Db\Node.cs" />
     <Compile Include="Models\GpxItem.cs" />
     <Compile Include="Models\Data\LocalData.cs" />
     <Compile Include="Models\WithingsHttp\RecordedHistory.cs" />
@@ -84,5 +88,6 @@
       <Name>ConfigTools</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
