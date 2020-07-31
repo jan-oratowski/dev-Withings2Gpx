@@ -106,7 +106,7 @@ namespace Withings2Gpx.Parsers
             }
 
             Console.WriteLine("Finished HeartRate JsonParser");
-            
+
             return hrs;
         }
 
