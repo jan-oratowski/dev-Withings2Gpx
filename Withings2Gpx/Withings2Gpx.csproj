@@ -59,6 +59,13 @@
     <Compile Include="Models\Data\Source.cs" />
     <Compile Include="Models\GpxItem.cs" />
     <Compile Include="Models\Data\LocalData.cs" />
+    <Compile Include="Models\GPX\Gpx.cs" />
+    <Compile Include="Models\GPX\GpxMetadata.cs" />
+    <Compile Include="Models\GPX\GpxMetadataLink.cs" />
+    <Compile Include="Models\GPX\GpxTrk.cs" />
+    <Compile Include="Models\GPX\GpxTrkTrksegTrkpt.cs" />
+    <Compile Include="Models\GPX\GgpxTrkTrksegTrkptExtensions.cs" />
+    <Compile Include="Models\GPX\NewDataSet.cs" />
     <Compile Include="Models\WithingsHttp\RecordedHistory.cs" />
     <Compile Include="Models\WithingsHttp\WithingsResponse.cs" />
     <Compile Include="Models\Withings\Activity.cs" />
@@ -68,6 +75,7 @@
     <Compile Include="Parsers\ActivityParser.cs" />
     <Compile Include="Parsers\CoordinateParser.cs" />
     <Compile Include="Parsers\CsvParser.cs" />
+    <Compile Include="Parsers\GpxParser.cs" />
     <Compile Include="Parsers\HeartRateParser.cs" />
     <Compile Include="Parsers\JsonParser.cs" />
     <Compile Include="Program.cs" />
@@ -84,5 +92,6 @@
       <Name>ConfigTools</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
