@@ -55,6 +55,14 @@ namespace Withings2Gpx
                     continue;
                 }
 
+                if (command == "c")
+                {
+                    CreateActivity();
+                    Data.Activities = Data.Activities.OrderByDescending(a => a.Start).ToList();
+                    Data.Save(Config.LastPath);
+                    continue;
+                }
+
                 if (Data.Activities.Any(a => a.Value.ToLower() == command.ToLower()))
                 {
                     foreach (var item in Data.Activities.Where(a => a.Value.ToLower() == command.ToLower()))
@@ -71,6 +79,33 @@ namespace Withings2Gpx
                 var activity = Data.Activities[i - 1];
                 ExportActivity(activity, fbd.SelectedPath);
             }
+        }
+
+        private static void CreateActivity()
+        {
+            var startString = EditableString.Input("Activity start", null).Value;
+            if (!DateTime.TryParse(startString, out var start))
+            {
+                Console.WriteLine("Wrong date format, aborting!");
+                return;
+            }
+
+            var endString = EditableString.Input("Activity end", null).Value;
+            if (!DateTime.TryParse(endString, out var end) || end < start)
+            {
+                Console.WriteLine("Wrong activity end time, aborting!");
+                return;
+            }
+
+            var activity = new Activity
+            {
+                Start = start,
+                End = end,
+                Source = Source.Manual,
+                Value = EditableString.Input("Activity name", "Manual Activity").Value
+            };
+
+            Data.Activities.Add(activity);
         }
 
         private static void DetectActivity()
