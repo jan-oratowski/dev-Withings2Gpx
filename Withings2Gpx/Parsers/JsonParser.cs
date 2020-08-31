@@ -22,7 +22,7 @@ namespace Withings2Gpx.Parsers
         public JsonParser(string path)
         {
             _path = path;
-            
+
             ParseHistory();
             var heartRateParser = Task.Factory.StartNew(GetHeartRates);
             var longitudesParser = Task.Factory.StartNew(() => GetCoordinates(CoordinateType.Longitude));
@@ -57,7 +57,7 @@ namespace Withings2Gpx.Parsers
             var items = _recordedHistory.History.Where(h => h.DataType == RecordedHistory.DataType.Location);
             foreach (var item in items)
             {
-                var bodyData = item.Response.Body.Data();
+                var bodyData = item.Response?.Body.Data();
                 if (bodyData == null || bodyData.Body.Series.Count == 0)
                     continue;
 
@@ -72,7 +72,7 @@ namespace Withings2Gpx.Parsers
                     coordinates.Add(coordinate);
                 }
             }
-            
+
             Console.WriteLine("Finished Coordinate JsonParser " + (coordinateType == CoordinateType.Longitude ? "longitude" : "latitude"));
 
             return coordinates;
