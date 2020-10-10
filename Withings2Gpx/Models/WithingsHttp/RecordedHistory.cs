@@ -3,16 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HarSharp;
 using Newtonsoft.Json;
 
 namespace Withings2Gpx.Models.WithingsHttp
 {
     class RecordedHistory
     {
-        public List<Item> History;
+        public List<Item> History = new List<Item>();
         
         public class Item
         {
+            public Item()
+            {
+            }
+
+            public Item(Entry harEntry)
+            {
+                if (harEntry == null || harEntry.Request.Method != "POST" || !harEntry.Request.Url.ToString().Contains("measure"))
+                    return;
+
+                if (harEntry.Request?.PostData?.Text != null)
+                    Request = new Request
+                    {
+                        PostData = harEntry.Request.PostData.Text,
+                        Url = harEntry.Request.Url?.ToString(),
+                    };
+
+                if (harEntry.Response?.Content?.Text != null)
+                    Response = new Response
+                    {
+                        Body = new Body
+                        {
+                            Content = harEntry.Response.Content.Text
+                        },
+                    };
+
+                Created = harEntry.StartedDateTime;
+            }
+
             public DateTime Created;
             public DateTime Received;
             public Response Response;

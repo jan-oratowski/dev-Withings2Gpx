@@ -12,6 +12,7 @@ namespace Withings2Gpx.Models.Data
       Csv = 1,
       Json = 2,
       Strava = 3,
-      Manual = 5
+      Manual = 5,
+      Har = 6
     } 
 }

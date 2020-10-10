@@ -36,6 +36,9 @@
     <ApplicationIcon>maps_alt.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HarSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HarSharp.2.0.0\lib\netstandard2.0\HarSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -65,9 +68,11 @@
     <Compile Include="Models\Withings\HeartRate.cs" />
     <Compile Include="Models\Withings\Coordinate.cs" />
     <Compile Include="Models\Withings\WithingsCsvEntry.cs" />
+    <Compile Include="Parsers\AbstractJsonParser.cs" />
     <Compile Include="Parsers\ActivityParser.cs" />
     <Compile Include="Parsers\CoordinateParser.cs" />
     <Compile Include="Parsers\CsvParser.cs" />
+    <Compile Include="Parsers\HarParser.cs" />
     <Compile Include="Parsers\HeartRateParser.cs" />
     <Compile Include="Parsers\JsonParser.cs" />
     <Compile Include="Program.cs" />

@@ -160,22 +160,26 @@ namespace Withings2Gpx
         private static void LoadData(string path)
         {
             Console.WriteLine($"Started loading data... {DateTime.Now}");
+            var jsonParser = new JsonParser(path);
+            var harParser = new HarParser(Path.Combine(path, "healthmate.withings.com.har"));
 
             var dataTask = Task.Factory.StartNew(() => LocalData.Load(path));
             var activitiesCsvParse = Task.Factory.StartNew(() => new ActivityParser(path).Get());
             var heartRateCsvParse = Task.Factory.StartNew(() => new HeartRateParser(path).Get());
             var longitudeCsvParse = Task.Factory.StartNew(() => new CoordinateParser(path, CoordinateType.Longitude).Get());
             var latitudeCsvParse = Task.Factory.StartNew(() => new CoordinateParser(path, CoordinateType.Latitude).Get());
-            var jsonTask = JsonParser.Run(path);
+            var jsonTask = jsonParser.LoadDataAsync();
+            var harTask = harParser.LoadDataAsync();
 
-            Task.WaitAll(dataTask, activitiesCsvParse, heartRateCsvParse, longitudeCsvParse, latitudeCsvParse, jsonTask);
+            Task.WaitAll(dataTask, activitiesCsvParse, heartRateCsvParse, longitudeCsvParse, latitudeCsvParse, jsonTask, harTask);
 
             Data = dataTask.Result;
 
             var addActivities = Task.Factory.StartNew(() => AddActivities(activitiesCsvParse.Result));
 
             AddEntries(heartRateCsvParse.Result, longitudeCsvParse.Result, latitudeCsvParse.Result, Source.Csv);
-            AddEntries(jsonTask.Result.HeartRates, jsonTask.Result.Longitudes, jsonTask.Result.Latitudes, Source.Json);
+            AddEntries(jsonParser.HeartRates, jsonParser.Longitudes, jsonParser.Latitudes, Source.Json);
+            AddEntries(harParser.HeartRates, harParser.Longitudes, harParser.Latitudes, Source.Har);
 
             addActivities.Wait();
 
