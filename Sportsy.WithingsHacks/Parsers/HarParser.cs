@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using HarSharp;
-using Withings2Gpx.Models.WithingsHttp;
+using Sportsy.WithingsHacks.WithingsHttp;
 
-namespace Withings2Gpx.Parsers
+namespace Sportsy.WithingsHacks.Parsers
 {
-    class HarParser : AbstractJsonParser
+    public class HarParser : AbstractJsonParser
     {
         public HarParser(string path) : base(path)
         {

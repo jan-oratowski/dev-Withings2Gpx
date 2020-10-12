@@ -6,9 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ConfigTools;
-using Withings2Gpx.Models;
-using Withings2Gpx.Models.Data;
-using Withings2Gpx.Parsers;
+using Sportsy.Data;
+using Sportsy.Data.Models;
+using Sportsy.WithingsHacks.Parsers;
 
 namespace Withings2Gpx
 {
@@ -187,7 +187,7 @@ namespace Withings2Gpx
             Data.Save(path);
         }
 
-        public static void AddActivities(IEnumerable<Models.Withings.Activity> activities)
+        public static void AddActivities(IEnumerable<Sportsy.WithingsHacks.Withings.Activity> activities)
         {
             foreach (var csvActivity in activities)
             {
@@ -207,7 +207,8 @@ namespace Withings2Gpx
             }
         }
 
-        public static void AddEntries(List<Models.Withings.HeartRate> hrs, List<Models.Withings.Coordinate> lons, List<Models.Withings.Coordinate> lats, Source src)
+        public static void AddEntries(List<Sportsy.WithingsHacks.Withings.HeartRate> hrs,
+            List<Sportsy.WithingsHacks.Withings.Coordinate> lons, List<Sportsy.WithingsHacks.Withings.Coordinate> lats, Source src)
         {
             var hr = Task.Factory.StartNew(() => AddHeartRates(hrs, src));
             var lon = Task.Factory.StartNew(() => AddLongitudes(lons, src));
@@ -215,19 +216,19 @@ namespace Withings2Gpx
             Task.WaitAll(hr, lon, lat);
         }
 
-        private static void AddHeartRates(List<Models.Withings.HeartRate> hrs, Source src)
+        private static void AddHeartRates(List<Sportsy.WithingsHacks.Withings.HeartRate> hrs, Source src)
         {
             foreach (var heartRate in hrs.Where(heartRate => !Data.HeartRates.ContainsKey(heartRate.TimeStamp)))
                 Data.HeartRates.Add(heartRate.TimeStamp, new HeartRate { Value = heartRate.Value, Source = src });
         }
 
-        private static void AddLongitudes(List<Models.Withings.Coordinate> lons, Source src)
+        private static void AddLongitudes(List<Sportsy.WithingsHacks.Withings.Coordinate> lons, Source src)
         {
             foreach (var longitude in lons.Where(longitude => !Data.Longitudes.ContainsKey(longitude.TimeStamp)))
                 Data.Longitudes.Add(longitude.TimeStamp, new Coordinate { Value = longitude.Value, Source = src });
         }
 
-        private static void AddLatitudes(List<Models.Withings.Coordinate> lats, Source src)
+        private static void AddLatitudes(List<Sportsy.WithingsHacks.Withings.Coordinate> lats, Source src)
         {
             foreach (var latitude in lats.Where(latitude => !Data.Latitudes.ContainsKey(latitude.TimeStamp)))
                 Data.Latitudes.Add(latitude.TimeStamp, new Coordinate { Value = latitude.Value, Source = src });

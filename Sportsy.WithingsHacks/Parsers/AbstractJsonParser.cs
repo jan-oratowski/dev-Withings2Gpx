@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Withings2Gpx.Models.Withings;
-using Withings2Gpx.Models.WithingsHttp;
+using Sportsy.WithingsHacks.Withings;
+using Sportsy.WithingsHacks.WithingsHttp;
 
-namespace Withings2Gpx.Parsers
+namespace Sportsy.WithingsHacks.Parsers
 {
-    class AbstractJsonParser
+    public class AbstractJsonParser
     {
         protected readonly string Path;
         protected RecordedHistory RecordedHistory;

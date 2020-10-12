@@ -36,12 +36,6 @@
     <ApplicationIcon>maps_alt.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HarSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HarSharp.2.0.0\lib\netstandard2.0\HarSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -54,39 +48,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GpxCreator.cs" />
-    <Compile Include="Models\Config.cs" />
-    <Compile Include="Models\Data\Activity.cs" />
-    <Compile Include="Models\Data\Coordinate.cs" />
-    <Compile Include="Models\Data\Data.cs" />
-    <Compile Include="Models\Data\HeartRate.cs" />
-    <Compile Include="Models\Data\Source.cs" />
-    <Compile Include="Models\GpxItem.cs" />
-    <Compile Include="Models\Data\LocalData.cs" />
-    <Compile Include="Models\WithingsHttp\RecordedHistory.cs" />
-    <Compile Include="Models\WithingsHttp\WithingsResponse.cs" />
-    <Compile Include="Models\Withings\Activity.cs" />
-    <Compile Include="Models\Withings\HeartRate.cs" />
-    <Compile Include="Models\Withings\Coordinate.cs" />
-    <Compile Include="Models\Withings\WithingsCsvEntry.cs" />
-    <Compile Include="Parsers\AbstractJsonParser.cs" />
-    <Compile Include="Parsers\ActivityParser.cs" />
-    <Compile Include="Parsers\CoordinateParser.cs" />
-    <Compile Include="Parsers\CsvParser.cs" />
-    <Compile Include="Parsers\HarParser.cs" />
-    <Compile Include="Parsers\HeartRateParser.cs" />
-    <Compile Include="Parsers\JsonParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="maps_alt.ico" />
     <ProjectReference Include="..\..\dev-wpsetup\WpSetup\ConfigTools\ConfigTools.csproj">
       <Project>{5eac8cfe-b29f-4b92-9e1c-7139b1d3d708}</Project>
       <Name>ConfigTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sportsy.Data\Sportsy.Data.csproj">
+      <Project>{f84a851a-1c9a-4408-9182-c85623bb6976}</Project>
+      <Name>Sportsy.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sportsy.WithingsHacks\Sportsy.WithingsHacks.csproj">
+      <Project>{3b946b12-a1c3-443b-bc49-c622f587f4c3}</Project>
+      <Name>Sportsy.WithingsHacks</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

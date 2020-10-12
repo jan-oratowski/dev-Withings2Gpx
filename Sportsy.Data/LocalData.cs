@@ -4,10 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Sportsy.Data.Models;
 
-namespace Withings2Gpx.Models.Data
+namespace Sportsy.Data
 {
-    class LocalData
+    public class LocalData
     {
         public Dictionary<DateTime, HeartRate> HeartRates;
         public Dictionary<DateTime, Coordinate> Longitudes;

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Withings2Gpx.Models.Data
+namespace Sportsy.Data.Models
 {
-    class Activity : Data<string>
+    public class Activity : Data<string>
     {
         public DateTime Start;
         public DateTime End;

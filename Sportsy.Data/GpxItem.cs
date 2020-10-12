@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Withings2Gpx.Models
+namespace Sportsy.Data
 {
-    class GpxItem
+    public class GpxItem
     {
         public decimal Latitude;
         public decimal Longitude;

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Withings2Gpx.Models.Withings;
+using Sportsy.WithingsHacks.Withings;
 
-namespace Withings2Gpx.Parsers
+namespace Sportsy.WithingsHacks.Parsers
 {
-    class CoordinateParser : CsvParser<Coordinate>
+    public class CoordinateParser : CsvParser<Coordinate>
     {
         public CoordinateParser(string path, CoordinateType coordinate) :
             base(System.IO.Path.Combine(path, coordinate == CoordinateType.Latitude

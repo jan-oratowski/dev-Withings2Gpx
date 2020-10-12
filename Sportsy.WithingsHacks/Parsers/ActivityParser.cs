@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Withings2Gpx.Models.Withings;
+using Sportsy.WithingsHacks.Withings;
 
-namespace Withings2Gpx.Parsers
+namespace Sportsy.WithingsHacks.Parsers
 {
-    class ActivityParser : CsvParser<Activity>
+    public class ActivityParser : CsvParser<Activity>
     {
         public ActivityParser(string path) : base(System.IO.Path.Combine(path, "activities.csv"))
         {

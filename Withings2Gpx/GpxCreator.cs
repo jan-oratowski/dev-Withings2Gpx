@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Withings2Gpx.Models;
-using Withings2Gpx.Models.Data;
+using Sportsy.Data;
+using Sportsy.Data.Models;
+
 // ReSharper disable PossibleMultipleEnumeration
 
 namespace Withings2Gpx

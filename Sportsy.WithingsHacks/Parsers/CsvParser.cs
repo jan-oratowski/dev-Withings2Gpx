@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Withings2Gpx.Parsers
+namespace Sportsy.WithingsHacks.Parsers
 {
-    abstract class CsvParser<T>
+    public abstract class CsvParser<T>
     {
         private readonly string _file;
         protected string ParseType = "Generic CsvParser";

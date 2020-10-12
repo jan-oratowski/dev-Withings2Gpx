@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HarSharp;
 using Newtonsoft.Json;
 
-namespace Withings2Gpx.Models.WithingsHttp
+namespace Sportsy.WithingsHacks.WithingsHttp
 {
-    class RecordedHistory
+    public class RecordedHistory
     {
         public List<Item> History = new List<Item>();
         

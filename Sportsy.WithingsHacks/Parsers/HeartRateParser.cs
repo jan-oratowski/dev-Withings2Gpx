@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Withings2Gpx.Models.Withings;
+using Sportsy.WithingsHacks.Withings;
 
-namespace Withings2Gpx.Parsers
+namespace Sportsy.WithingsHacks.Parsers
 {
-    class HeartRateParser : CsvParser<HeartRate>
+    public class HeartRateParser : CsvParser<HeartRate>
     {
         public HeartRateParser(string path) :
             base(System.IO.Path.Combine(path, "raw_tracker_hr.csv"))

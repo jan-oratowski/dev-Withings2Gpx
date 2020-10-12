@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Withings2Gpx.Models.Withings;
-using Withings2Gpx.Models.WithingsHttp;
+﻿using Sportsy.WithingsHacks.WithingsHttp;
 
-namespace Withings2Gpx.Parsers
+namespace Sportsy.WithingsHacks.Parsers
 {
-    class JsonParser : AbstractJsonParser
+    public class JsonParser : AbstractJsonParser
     {
         public JsonParser(string path) : base(path)
         {

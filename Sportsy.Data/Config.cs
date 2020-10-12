@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace Withings2Gpx.Models
+namespace Sportsy.Data
 {
     public class Config
     {
