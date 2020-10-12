@@ -7,9 +7,9 @@ using Sportsy.Data.Models;
 
 // ReSharper disable PossibleMultipleEnumeration
 
-namespace Withings2Gpx
+namespace Sportsy.Connections
 {
-    class GpxCreator
+    public class GpxCreator
     {
         public List<GpxItem> GpxItems = new List<GpxItem>();
         private readonly Activity _activity;

@@ -7,9 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Withings2Gpx", "Withings2Gp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigTools", "..\dev-wpsetup\WpSetup\ConfigTools\ConfigTools.csproj", "{5EAC8CFE-B29F-4B92-9E1C-7139B1D3D708}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.Data", "Sportsy.Data\Sportsy.Data.csproj", "{F84A851A-1C9A-4408-9182-C85623BB6976}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.Data", "Sportsy.Data\Sportsy.Data.csproj", "{F84A851A-1C9A-4408-9182-C85623BB6976}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.WithingsHacks", "Sportsy.WithingsHacks\Sportsy.WithingsHacks.csproj", "{3B946B12-A1C3-443B-BC49-C622F587F4C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.WithingsHacks", "Sportsy.WithingsHacks\Sportsy.WithingsHacks.csproj", "{3B946B12-A1C3-443B-BC49-C622F587F4C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.Connections", "Sportsy.Connections\Sportsy.Connections.csproj", "{372947D1-F622-4608-9D66-6F628FE341E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.Core", "Sportsy.Core\Sportsy.Core.csproj", "{FCF58F19-CD27-4A31-A73D-0274F56D581D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Withings2Gpx.NetCore", "Withings2Gpx.NetCore\Withings2Gpx.NetCore.csproj", "{A469B45C-5503-42E7-BC76-9EAB1576B1CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,18 @@ Global
 		{3B946B12-A1C3-443B-BC49-C622F587F4C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B946B12-A1C3-443B-BC49-C622F587F4C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B946B12-A1C3-443B-BC49-C622F587F4C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{372947D1-F622-4608-9D66-6F628FE341E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{372947D1-F622-4608-9D66-6F628FE341E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{372947D1-F622-4608-9D66-6F628FE341E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{372947D1-F622-4608-9D66-6F628FE341E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCF58F19-CD27-4A31-A73D-0274F56D581D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCF58F19-CD27-4A31-A73D-0274F56D581D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCF58F19-CD27-4A31-A73D-0274F56D581D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCF58F19-CD27-4A31-A73D-0274F56D581D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A469B45C-5503-42E7-BC76-9EAB1576B1CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A469B45C-5503-42E7-BC76-9EAB1576B1CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A469B45C-5503-42E7-BC76-9EAB1576B1CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A469B45C-5503-42E7-BC76-9EAB1576B1CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

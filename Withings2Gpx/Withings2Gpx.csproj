@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GpxCreator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +58,14 @@
     <ProjectReference Include="..\..\dev-wpsetup\WpSetup\ConfigTools\ConfigTools.csproj">
       <Project>{5eac8cfe-b29f-4b92-9e1c-7139b1d3d708}</Project>
       <Name>ConfigTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sportsy.Connections\Sportsy.Connections.csproj">
+      <Project>{372947d1-f622-4608-9d66-6f628fe341e4}</Project>
+      <Name>Sportsy.Connections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sportsy.Core\Sportsy.Core.csproj">
+      <Project>{fcf58f19-cd27-4a31-a73d-0274f56d581d}</Project>
+      <Name>Sportsy.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sportsy.Data\Sportsy.Data.csproj">
       <Project>{f84a851a-1c9a-4408-9182-c85623bb6976}</Project>
