@@ -57,7 +57,7 @@ namespace Withings2Gpx.Parsers
             var items = _recordedHistory.History.Where(h => h.DataType == RecordedHistory.DataType.Location);
             foreach (var item in items)
             {
-                var bodyData = item.Response?.Body.Data();
+                var bodyData = item.Response?.Body?.Data();
                 if (bodyData == null || bodyData.Body.Series.Count == 0)
                     continue;
 
@@ -89,7 +89,7 @@ namespace Withings2Gpx.Parsers
             var items = _recordedHistory.History.Where(h => h.DataType == RecordedHistory.DataType.HR);
             foreach (var item in items)
             {
-                var bodyData = item.Response.Body.Data();
+                var bodyData = item.Response?.Body?.Data();
                 if (bodyData == null || bodyData.Body.Series.Count == 0)
                     continue;
 
