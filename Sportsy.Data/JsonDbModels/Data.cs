@@ -1,4 +1,4 @@
-﻿namespace Sportsy.Data.Models
+﻿namespace Sportsy.Data.JsonDbModels
 {
     public class Data<T>
     {

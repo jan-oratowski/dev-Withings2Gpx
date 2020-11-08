@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Sportsy.Data;
-using Sportsy.Data.Models;
+using Sportsy.Data.JsonDbModels;
 
 // ReSharper disable PossibleMultipleEnumeration
 
