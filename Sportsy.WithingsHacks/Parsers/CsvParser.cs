@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Sportsy.WithingsHacks.Parsers
 {
@@ -16,8 +17,13 @@ namespace Sportsy.WithingsHacks.Parsers
         public List<T> Get(string filter = null)
         {
             Console.WriteLine($"Started {ParseType}");
-            var lines = System.IO.File.ReadAllLines(_file);
             var list = new List<T>();
+            
+            if (!File.Exists(_file))
+                return list;
+            
+            var lines = System.IO.File.ReadAllLines(_file);
+            
             if (lines.Length == 0)
                 return list;
 
