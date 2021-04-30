@@ -4,9 +4,14 @@ using System.Text;
 
 namespace Sportsy.Data.Models
 {
-    class User
+    public class User
     {
-        public string Name;
-        public List<Activity> Activities { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public ICollection<Activity> Activities { get; set; }
+        public ICollection<Measurement> Weights { get; set; }
+        public ICollection<Gear> Gears { get; set; }
+        public ICollection<UserConfig> Configs { get; set; }
+
     }
 }

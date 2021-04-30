@@ -9,7 +9,6 @@ namespace Sportsy.Data.JsonDbModels
 
         public Activity()
         {
-
         }
     }
 }

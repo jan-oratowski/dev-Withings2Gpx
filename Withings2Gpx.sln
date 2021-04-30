@@ -11,11 +11,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.Data", "Sportsy.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.WithingsHacks", "Sportsy.WithingsHacks\Sportsy.WithingsHacks.csproj", "{3B946B12-A1C3-443B-BC49-C622F587F4C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.Connections", "Sportsy.Connections\Sportsy.Connections.csproj", "{372947D1-F622-4608-9D66-6F628FE341E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.Connections", "Sportsy.Connections\Sportsy.Connections.csproj", "{372947D1-F622-4608-9D66-6F628FE341E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.Core", "Sportsy.Core\Sportsy.Core.csproj", "{FCF58F19-CD27-4A31-A73D-0274F56D581D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.Core", "Sportsy.Core\Sportsy.Core.csproj", "{FCF58F19-CD27-4A31-A73D-0274F56D581D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Withings2Gpx.NetCore", "Withings2Gpx.NetCore\Withings2Gpx.NetCore.csproj", "{A469B45C-5503-42E7-BC76-9EAB1576B1CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Withings2Gpx.NetCore", "Withings2Gpx.NetCore\Withings2Gpx.NetCore.csproj", "{A469B45C-5503-42E7-BC76-9EAB1576B1CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.WebClient.Server", "Sportsy.WebClient\Server\Sportsy.WebClient.Server.csproj", "{27573764-81F8-4628-B5D2-4907FA0200CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.WebClient.Client", "Sportsy.WebClient\Client\Sportsy.WebClient.Client.csproj", "{3DB49BAE-5F4A-4627-900D-DBC1012F8E4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.WebClient.Shared", "Sportsy.WebClient\Shared\Sportsy.WebClient.Shared.csproj", "{77550C0A-872D-4FDE-8221-FF66860C02E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +57,18 @@ Global
 		{A469B45C-5503-42E7-BC76-9EAB1576B1CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A469B45C-5503-42E7-BC76-9EAB1576B1CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A469B45C-5503-42E7-BC76-9EAB1576B1CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27573764-81F8-4628-B5D2-4907FA0200CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27573764-81F8-4628-B5D2-4907FA0200CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27573764-81F8-4628-B5D2-4907FA0200CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27573764-81F8-4628-B5D2-4907FA0200CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DB49BAE-5F4A-4627-900D-DBC1012F8E4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DB49BAE-5F4A-4627-900D-DBC1012F8E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DB49BAE-5F4A-4627-900D-DBC1012F8E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DB49BAE-5F4A-4627-900D-DBC1012F8E4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77550C0A-872D-4FDE-8221-FF66860C02E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77550C0A-872D-4FDE-8221-FF66860C02E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77550C0A-872D-4FDE-8221-FF66860C02E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77550C0A-872D-4FDE-8221-FF66860C02E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
