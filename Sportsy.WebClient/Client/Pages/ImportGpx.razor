@@ -1,0 +1,8 @@
+﻿@page "/importGpx"
+<h3>ImportGpx</h3>
+
+@using Syncfusion.Blazor.Inputs
+
+<SfUploader ID="UploadFiles">
+    <UploaderAsyncSettings SaveUrl="@Api.ImportGpxSave" RemoveUrl="api/ImportGpx/Remove"></UploaderAsyncSettings>
+</SfUploader>

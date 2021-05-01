@@ -22,7 +22,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _user = await Http.GetFromJsonAsync<User>("api/Dashboard");
+        _user = await Http.GetFromJsonAsync<User>(@Api.Dashboard);
     }
 
 }

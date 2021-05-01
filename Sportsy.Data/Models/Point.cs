@@ -11,6 +11,9 @@ namespace Sportsy.Data.Models
         public int? HeartRate { get; set; }
         public int? Cadence { get; set; }
         public int? Power { get; set; }
+        public decimal? Speed { get; set; }
+        public decimal? Distance { get; set; }
+        public decimal? Elevation { get; set; }
         public Activity Activity { get; set; }
     }
 }
