@@ -10,7 +10,7 @@ namespace Sportsy.Data.Models
         public string Name { get; set; }
         public bool IsMain { get; set; }
         public DateTime StartTime { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime EndTime { get; set; }
         public ImportSourceEnum ImportSource { get; set; }
         public ICollection<ImportedPoint> Points { get; set; }
     }

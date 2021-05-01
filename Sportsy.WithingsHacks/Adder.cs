@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Sportsy.Data;
-using Sportsy.Data.Models;
+using Sportsy.Data.JsonDbModels;
 
 namespace Sportsy.WithingsHacks
 {

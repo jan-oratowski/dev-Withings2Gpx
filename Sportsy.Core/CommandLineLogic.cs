@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ConfigTools;
 using Sportsy.Connections;
 using Sportsy.Data;
-using Sportsy.Data.Models;
+using Sportsy.Data.JsonDbModels;
 using Sportsy.WithingsHacks;
 
 namespace Sportsy.Core
@@ -168,7 +168,16 @@ namespace Sportsy.Core
             _data.Activities.Add(activity);
         }
 
+        private void SaveToDb()
+        {
+            foreach (var activity in _data.Activities)
+            {
+                var activityHrs = _data.HeartRates.Where(h => h.Key >= activity.Start && h.Key <= activity.End).ToList();
+                var activityLongs = _data.Longitudes.Where(l => l.Key >= activity.Start && l.Key <= activity.End).ToList();
+                var activityLats = _data.Latitudes.Where(l => l.Key >= activity.Start && l.Key <= activity.End).ToList();
 
+            }
+        }
 
         private void ExportActivity(Activity activity, string path)
         {

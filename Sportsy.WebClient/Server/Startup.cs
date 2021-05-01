@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Sportsy.Data;
+using Sportsy.Data.Database;
 
 namespace Sportsy.WebClient.Server
 {

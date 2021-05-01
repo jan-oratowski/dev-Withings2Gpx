@@ -1,17 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sportsy.Data.Models;
 
-namespace Sportsy.Data.Database
+namespace Sportsy.Core
 {
-    public class SportsyContext : DbContext
+    class ImportContext : DbContext
     {
-        public SportsyContext() : base()
+        public ImportContext() : base()
         {
 
         }
 
-        public SportsyContext(DbContextOptions<SportsyContext> options) : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseSqlServer(
+                "Server=(localdb)\\mssqllocaldb;Database=SportsyDB;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
 
         public DbSet<Activity> Activities { get; set; }
@@ -24,3 +26,4 @@ namespace Sportsy.Data.Database
         public DbSet<UserConfig> UserConfigs { get; set; }
     }
 }
+

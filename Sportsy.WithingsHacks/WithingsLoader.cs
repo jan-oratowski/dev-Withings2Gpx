@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Sportsy.Data;
-using Sportsy.Data.Models;
+using Sportsy.Data.JsonDbModels;
 using Sportsy.WithingsHacks.Parsers;
 using Activity = Sportsy.WithingsHacks.Withings.Activity;
 using Coordinate = Sportsy.WithingsHacks.Withings.Coordinate;
