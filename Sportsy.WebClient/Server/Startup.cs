@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sportsy.Connections.Gpx;
 using Sportsy.Data.Database;
+using Sportsy.Services.ActivityTools;
 using Sportsy.Services.ActivityToolService;
 using Syncfusion.Blazor;
 
@@ -28,7 +29,7 @@ namespace Sportsy.WebClient.Server
             services.AddRazorPages();
             services.AddSyncfusionBlazor();
             services.AddSingleton<IGpxParser, GpxParser>();
-            services.AddSingleton<IActivityToolService, ActivityToolService>();
+            services.AddSingleton<IActivityCreator, ActivityCreator>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

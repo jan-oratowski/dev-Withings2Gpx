@@ -16,9 +16,9 @@ namespace Sportsy.WebClient.Server.Controllers
     {
         private readonly SportsyContext _context;
         private readonly IGpxParser _gpxParser;
-        private readonly IActivityToolService _activityTool;
+        private readonly IActivityCreator _activityTool;
 
-        public ImportGpxController(SportsyContext context, IGpxParser gpxParser, IActivityToolService activityTool)
+        public ImportGpxController(SportsyContext context, IGpxParser gpxParser, IActivityCreator activityTool)
         {
             _context = context;
             _gpxParser = gpxParser;

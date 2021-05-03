@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sportsy.Data.Database;
-using Sportsy.Data.Models;
+using Sportsy.Services.ActivityTools;
+using Sportsy.Services.UserTools;
+using Sportsy.WebClient.Shared.Responses;
+using System.Linq;
 
 namespace Sportsy.WebClient.Server.Controllers
 {
@@ -21,10 +22,21 @@ namespace Sportsy.WebClient.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<User> Get()
+        public DashboardResponse Get(int userId)
         {
-            var userId = 1;
-            return await _context.Users.FirstAsync(u => u.Id == userId);
+            return new DashboardResponse
+            {
+                Activities = _context.Activities
+                    .Where(a => a.User.Id == userId)
+                    .OrderByDescending(a => a.StartTime)
+                    .Take(10)
+                    .AsEnumerable()
+                    .Select(ActivityMapper.ToActivityBase)
+                    .ToList(),
+                User = _context.Users
+                    .Single(u => u.Id == userId)
+                    .ToUserBase()
+            };
         }
     }
 }

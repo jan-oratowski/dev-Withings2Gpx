@@ -1,11 +1,12 @@
-﻿using Sportsy.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sportsy.Data.Models;
+using Sportsy.Services.ActivityToolService;
 
-namespace Sportsy.Services.ActivityToolService
+namespace Sportsy.Services.ActivityTools
 {
-    public class ActivityToolService : IActivityToolService
+    public class ActivityCreator : IActivityCreator
     {
         public Activity CreateFrom(ImportedActivity imported)
         {
