@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Sportsy.Connections\Sportsy.Connections.csproj" />
     <ProjectReference Include="..\..\Sportsy.Data\Sportsy.Data.csproj" />
     <ProjectReference Include="..\Client\Sportsy.WebClient.Client.csproj" />
     <ProjectReference Include="..\Shared\Sportsy.WebClient.Shared.csproj" />

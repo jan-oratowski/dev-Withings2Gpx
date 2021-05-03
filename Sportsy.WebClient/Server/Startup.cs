@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Sportsy.Data;
 using Sportsy.Data.Database;
+using Syncfusion.Blazor;
 
 namespace Sportsy.WebClient.Server
 {
@@ -29,6 +30,7 @@ namespace Sportsy.WebClient.Server
 //#endif
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSyncfusionBlazor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

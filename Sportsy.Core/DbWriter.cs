@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Sportsy.Data.JsonDbModels;
+using Sportsy.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using Sportsy.Data.Database;
-using Sportsy.Data.JsonDbModels;
-using Sportsy.Data.Models;
 using Activity = Sportsy.Data.JsonDbModels.Activity;
 // ReSharper disable PossibleMultipleEnumeration
 
@@ -16,11 +13,11 @@ namespace Sportsy.Core
     {
         private ImportContext _context = new ImportContext();
 
-        public void SaveActivity(Activity activity, List<KeyValuePair<DateTime,HeartRate>> hrs,
+        public void SaveActivity(Activity activity, List<KeyValuePair<DateTime, HeartRate>> hrs,
             List<KeyValuePair<DateTime, Coordinate>> longs, List<KeyValuePair<DateTime, Coordinate>> lats)
         {
             var importedPoints = AddData(longs, lats, hrs);
-            
+
             var importedActivity = new ImportedActivity
             {
                 StartTime = activity.Start,
@@ -42,8 +39,8 @@ namespace Sportsy.Core
                 Points = importedPoints.Select(p => new Point
                 {
                     HeartRate = p.HeartRate,
-                    Lat = p.Lat,
-                    Lon = p.Lon,
+                    Lat = p.Latitude,
+                    Lon = p.Longitude,
                 }).ToList(),
                 User = _context.Users.First(u => u.Id == 1),
                 Name = activity.Value,
@@ -67,8 +64,8 @@ namespace Sportsy.Core
 
                 var importedPoint = new ImportedPoint
                 {
-                    Lat = latitude.Value.Value,
-                    Lon = longitude.Value.Value,
+                    Latitude = latitude.Value.Value,
+                    Longitude = longitude.Value.Value,
                     Time = longitude.Key
                 };
 
@@ -111,6 +108,6 @@ namespace Sportsy.Core
                     return ImportSourceEnum.Manual;
             }
         }
-        
+
     }
 }

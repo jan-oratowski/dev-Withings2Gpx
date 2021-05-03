@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Sportsy.Data.Models
 {
@@ -12,7 +11,8 @@ namespace Sportsy.Data.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public User User { get; set; }
-        public ICollection<Point> Points { get; set; } 
+        public ActivityTypeEnum ActivityType { get; set; }
+        public ICollection<Point> Points { get; set; }
         public ICollection<ImportedActivity> ImportedActivities { get; set; }
     }
 }

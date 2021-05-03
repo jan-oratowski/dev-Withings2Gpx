@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Syncfusion.Blazor;
 
 namespace Sportsy.WebClient.Client
 {
@@ -21,7 +22,9 @@ namespace Sportsy.WebClient.Client
             {
                 BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
             });
-            
+
+            builder.Services.AddSyncfusionBlazor();
+
             await builder.Build().RunAsync();
         }
     }
