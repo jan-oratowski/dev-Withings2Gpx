@@ -4,4 +4,12 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Activity\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Sportsy.Enums\Sportsy.Enums.csproj" />
+  </ItemGroup>
+
 </Project>

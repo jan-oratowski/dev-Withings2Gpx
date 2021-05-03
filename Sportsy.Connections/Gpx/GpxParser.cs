@@ -1,6 +1,8 @@
 ﻿using Sportsy.Data.Models;
+using Sportsy.Enums;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -30,6 +32,14 @@ namespace Sportsy.Connections.Gpx
             AddMetadata(importedActivity, nodes.FirstOrDefault(node => node.Name == "metadata"));
             AddTrack(importedActivity, nodes.FirstOrDefault(node => node.Name == "trk"));
 
+            var points = importedActivity.Points.OrderBy(p => p.Time);
+
+            if (points.First().Time.HasValue && !importedActivity.StartTime.HasValue)
+                importedActivity.StartTime = points.First().Time;
+
+            if (points.Last().Time.HasValue && !importedActivity.EndTime.HasValue)
+                importedActivity.EndTime = points.Last().Time;
+
             return importedActivity;
         }
 
@@ -40,7 +50,7 @@ namespace Sportsy.Connections.Gpx
 
             foreach (XmlNode node in track.ChildNodes)
             {
-                switch (node.Name)
+                switch (node.Name.ToLower())
                 {
                     case "src":
                         importedActivity.ImportSource = DetectSource(node.InnerText);
@@ -48,24 +58,18 @@ namespace Sportsy.Connections.Gpx
                     case "type":
                         importedActivity.ActivityType = DetectActivityType(node.InnerText);
                         break;
+                    // ReSharper disable once StringLiteralTypo
                     case "trkseg":
                         importedActivity.Points = AddPoints(node);
                         break;
-
                 }
             }
-
         }
 
-        private ICollection<ImportedPoint> AddPoints(XmlNode node)
-        {
-            var points = new List<ImportedPoint>();
-
-            foreach (XmlNode pt in node.ChildNodes)
-                points.Add(MapToImportedPoint(pt));
-
-            return points;
-        }
+        private ICollection<ImportedPoint> AddPoints(XmlNode node) =>
+            (from XmlNode pt in node.ChildNodes
+             select MapToImportedPoint(pt)
+                ).ToList();
 
         private ImportedPoint MapToImportedPoint(XmlNode pt)
         {
@@ -73,19 +77,23 @@ namespace Sportsy.Connections.Gpx
 
             var lat = GetValueFromAttribute(pt, "lat");
             if (!string.IsNullOrWhiteSpace(lat))
-                point.Latitude = decimal.Parse(lat);
+                point.Latitude = decimal.Parse(lat, NumberStyles.Number, CultureInfo.InvariantCulture);
 
             var lon = GetValueFromAttribute(pt, "lon");
             if (!string.IsNullOrWhiteSpace(lon))
-                point.Longitude = decimal.Parse(lon);
+                point.Longitude = decimal.Parse(lon, NumberStyles.Number, CultureInfo.InvariantCulture);
 
             foreach (XmlNode node in pt.ChildNodes)
             {
-                switch (node.Name)
+                switch (node.Name.ToLower())
                 {
                     case "time":
-                        if (DateTime.TryParse(node.Value, out var dt))
+                        if (DateTime.TryParse(node.InnerText, out var dt))
                             point.Time = dt;
+                        break;
+                    case "ele":
+                        if (decimal.TryParse(node.InnerText, NumberStyles.Number, CultureInfo.InvariantCulture, out var ele))
+                            point.Elevation = ele;
                         break;
                     case "extensions":
                         LoadFromExtensions(point, node);
@@ -94,15 +102,30 @@ namespace Sportsy.Connections.Gpx
             }
 
             return point;
-
         }
 
         private void LoadFromExtensions(ImportedPoint point, XmlNode node)
         {
-            if (node == null || point == null)
+            if (node == null || point == null || !node.HasChildNodes)
                 return;
 
-
+            foreach (XmlNode ext in node.ChildNodes)
+                foreach (XmlNode child in ext.ChildNodes)
+                    switch (child.Name.ToLower())
+                    { // ReSharper disable StringLiteralTypo
+                        case "gpxtpx:hr":
+                            point.HeartRate = int.Parse(child.InnerText);
+                            break;
+                        case "gpxtpx:cad":
+                            point.Cadence = int.Parse(child.InnerText);
+                            break;
+                        case "gpxtpx:atemp":
+                            point.Temperature = decimal.Parse(child.InnerText, NumberStyles.Number, CultureInfo.InvariantCulture);
+                            break;
+                        case "gpxpx:PowerInWatts":
+                            point.Power = int.Parse(child.InnerText);
+                            break;
+                    } // ReSharper restore StringLiteralTypo
         }
 
 
@@ -119,7 +142,7 @@ namespace Sportsy.Connections.Gpx
 
             foreach (XmlNode node in metadata.ChildNodes)
             {
-                switch (node.Name)
+                switch (node.Name.ToLower())
                 {
                     case "name":
                         importedActivity.Name = node.InnerText;
@@ -157,8 +180,5 @@ namespace Sportsy.Connections.Gpx
                     return ActivityTypeEnum.Other;
             }
         }
-    }
-    internal static class GpxParserExtensions
-    {
     }
 }

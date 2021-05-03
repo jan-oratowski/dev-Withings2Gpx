@@ -14,4 +14,8 @@
     <Folder Include="LegacyModels\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sportsy.Enums\Sportsy.Enums.csproj" />
+  </ItemGroup>
+
 </Project>

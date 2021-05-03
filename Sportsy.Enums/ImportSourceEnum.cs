@@ -1,4 +1,4 @@
-﻿namespace Sportsy.Data.Models
+﻿namespace Sportsy.Enums
 {
     public enum ImportSourceEnum
     {

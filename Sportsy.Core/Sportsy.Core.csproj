@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +14,10 @@
     <ProjectReference Include="..\Sportsy.Connections\Sportsy.Connections.csproj" />
     <ProjectReference Include="..\Sportsy.Data\Sportsy.Data.csproj" />
     <ProjectReference Include="..\Sportsy.WithingsHacks\Sportsy.WithingsHacks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ActivityTool\" />
   </ItemGroup>
 
 </Project>

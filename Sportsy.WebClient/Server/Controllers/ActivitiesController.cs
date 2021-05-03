@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sportsy.Data.Database;
-using Sportsy.Data.Models;
+using Sportsy.WebClient.Shared.Models;
+using Sportsy.WebClient.Shared.Responses;
+using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace Sportsy.WebClient.Server.Controllers
@@ -24,7 +24,31 @@ namespace Sportsy.WebClient.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Activity>> Get(int userId) =>
-            await _context.Activities.Where(a => a.User.Id == userId).ToListAsync();
+        public async Task<ActivitiesResponse> Get(int userId) =>
+            new ActivitiesResponse
+            {
+                Activities = await _context.Activities
+                    .Include(a => a.ImportedActivities)
+                    .Where(a => a.User.Id == userId)
+                    .Select(a => new ActivityBase
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        Comments = a.Comments,
+                        StartTime = a.StartTime,
+                        EndTime = a.EndTime,
+                        User = new UserBase
+                        {
+                            Id = a.User.Id,
+                            Name = a.User.Name,
+                        },
+                        ImportedActivities = a.ImportedActivities.Select(i => new ImportedActivityBase
+                        {
+                            Id = i.Id,
+                            ImportSource = i.ImportSource
+                        }).ToList()
+                    })
+                    .ToListAsync(),
+            };
     }
 }

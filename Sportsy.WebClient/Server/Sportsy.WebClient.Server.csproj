@@ -11,6 +11,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Sportsy.Connections\Sportsy.Connections.csproj" />
     <ProjectReference Include="..\..\Sportsy.Data\Sportsy.Data.csproj" />
+    <ProjectReference Include="..\..\Sportsy.Enums\Sportsy.Enums.csproj" />
+    <ProjectReference Include="..\..\Sportsy.Services\Sportsy.Services.csproj" />
     <ProjectReference Include="..\Client\Sportsy.WebClient.Client.csproj" />
     <ProjectReference Include="..\Shared\Sportsy.WebClient.Shared.csproj" />
   </ItemGroup>

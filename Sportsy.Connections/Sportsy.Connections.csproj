@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sportsy.Data\Sportsy.Data.csproj" />
+    <ProjectReference Include="..\Sportsy.Services\Sportsy.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

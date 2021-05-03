@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Withings2Gpx", "Withings2Gpx\Withings2Gpx.csproj", "{81CFF2C8-8B8C-4E2A-8572-1B8B1F69BF7F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigTools", "..\dev-wpsetup\WpSetup\ConfigTools\ConfigTools.csproj", "{5EAC8CFE-B29F-4B92-9E1C-7139B1D3D708}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.Data", "Sportsy.Data\Sportsy.Data.csproj", "{F84A851A-1C9A-4408-9182-C85623BB6976}"
@@ -23,15 +21,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.WebClient.Client", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.WebClient.Shared", "Sportsy.WebClient\Shared\Sportsy.WebClient.Shared.csproj", "{77550C0A-872D-4FDE-8221-FF66860C02E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.Services", "Sportsy.Services\Sportsy.Services.csproj", "{7397F07C-E7C0-4AEB-A1BB-EEEED6F0F4E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.Enums", "Sportsy.Enums\Sportsy.Enums.csproj", "{7C460113-0783-48A1-9894-5B9075B7E613}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{81CFF2C8-8B8C-4E2A-8572-1B8B1F69BF7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81CFF2C8-8B8C-4E2A-8572-1B8B1F69BF7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81CFF2C8-8B8C-4E2A-8572-1B8B1F69BF7F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5EAC8CFE-B29F-4B92-9E1C-7139B1D3D708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5EAC8CFE-B29F-4B92-9E1C-7139B1D3D708}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EAC8CFE-B29F-4B92-9E1C-7139B1D3D708}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -68,6 +67,14 @@ Global
 		{77550C0A-872D-4FDE-8221-FF66860C02E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77550C0A-872D-4FDE-8221-FF66860C02E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77550C0A-872D-4FDE-8221-FF66860C02E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7397F07C-E7C0-4AEB-A1BB-EEEED6F0F4E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7397F07C-E7C0-4AEB-A1BB-EEEED6F0F4E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7397F07C-E7C0-4AEB-A1BB-EEEED6F0F4E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7397F07C-E7C0-4AEB-A1BB-EEEED6F0F4E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C460113-0783-48A1-9894-5B9075B7E613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C460113-0783-48A1-9894-5B9075B7E613}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C460113-0783-48A1-9894-5B9075B7E613}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C460113-0783-48A1-9894-5B9075B7E613}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

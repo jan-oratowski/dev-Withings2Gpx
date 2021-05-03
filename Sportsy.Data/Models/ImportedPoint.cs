@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sportsy.Data.Models
 {
     public class ImportedPoint
     {
         public long Id { get; set; }
-        public DateTime Time { get; set; }
+        public DateTime? Time { get; set; }
         public decimal? Longitude { get; set; }
         public decimal? Latitude { get; set; }
         public int? HeartRate { get; set; }

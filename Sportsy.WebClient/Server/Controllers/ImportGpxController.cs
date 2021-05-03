@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Sportsy.Connections.Gpx;
+using Sportsy.Data.Database;
+using Sportsy.Services.ActivityToolService;
+using System;
+using System.Collections.Generic;
 
 namespace Sportsy.WebClient.Server.Controllers
 {
@@ -15,12 +14,16 @@ namespace Sportsy.WebClient.Server.Controllers
     [ApiController]
     public class ImportGpxController : ControllerBase
     {
-        private readonly IGpxParser _gpxParser = new GpxParser();
+        private readonly SportsyContext _context;
+        private readonly IGpxParser _gpxParser;
+        private readonly IActivityToolService _activityTool;
 
-        //public ImportGpxController(IGpxParser gpxParser)
-        //{
-        //    _gpxParser = gpxParser;
-        //}
+        public ImportGpxController(SportsyContext context, IGpxParser gpxParser, IActivityToolService activityTool)
+        {
+            _context = context;
+            _gpxParser = gpxParser;
+            _activityTool = activityTool;
+        }
 
         [HttpPost("[action]")]
         public void Save(IList<IFormFile> chunkFile, IList<IFormFile> UploadFiles)
@@ -34,8 +37,10 @@ namespace Sportsy.WebClient.Server.Controllers
                         .Parse(file.ContentDisposition)
                         .FileName
                         .Trim();
-                    _gpxParser.Parse(file.OpenReadStream());
-
+                    var fromGpx = _gpxParser.Parse(file.OpenReadStream());
+                    var activity = _activityTool.CreateFrom(fromGpx);
+                    _context.Activities.Add(activity);
+                    _context.SaveChanges();
                 }
             }
             catch (Exception e)

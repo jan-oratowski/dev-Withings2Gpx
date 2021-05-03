@@ -1,5 +1,6 @@
 ﻿using Sportsy.Data.JsonDbModels;
 using Sportsy.Data.Models;
+using Sportsy.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,8 +40,8 @@ namespace Sportsy.Core
                 Points = importedPoints.Select(p => new Point
                 {
                     HeartRate = p.HeartRate,
-                    Lat = p.Latitude,
-                    Lon = p.Longitude,
+                    Latitude = p.Latitude,
+                    Longitude = p.Longitude,
                 }).ToList(),
                 User = _context.Users.First(u => u.Id == 1),
                 Name = activity.Value,
