@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.WebClient.Client", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.WebClient.Shared", "Sportsy.WebClient\Shared\Sportsy.WebClient.Shared.csproj", "{77550C0A-872D-4FDE-8221-FF66860C02E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.Services", "Sportsy.Services\Sportsy.Services.csproj", "{7397F07C-E7C0-4AEB-A1BB-EEEED6F0F4E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.Services", "Sportsy.Services\Sportsy.Services.csproj", "{7397F07C-E7C0-4AEB-A1BB-EEEED6F0F4E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.Enums", "Sportsy.Enums\Sportsy.Enums.csproj", "{7C460113-0783-48A1-9894-5B9075B7E613}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sportsy.Enums", "Sportsy.Enums\Sportsy.Enums.csproj", "{7C460113-0783-48A1-9894-5B9075B7E613}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sportsy.AuthAndAut", "Sportsy.AuthAndAut\Sportsy.AuthAndAut.csproj", "{34201784-A076-45EF-994D-F509DE2944DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{7C460113-0783-48A1-9894-5B9075B7E613}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C460113-0783-48A1-9894-5B9075B7E613}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C460113-0783-48A1-9894-5B9075B7E613}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34201784-A076-45EF-994D-F509DE2944DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34201784-A076-45EF-994D-F509DE2944DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34201784-A076-45EF-994D-F509DE2944DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34201784-A076-45EF-994D-F509DE2944DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
